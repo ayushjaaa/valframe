@@ -1,0 +1,15 @@
+/* ============================================================
+   MONITOR CANVAS
+   ============================================================ */
+
+.monitor-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  background: transparent;
+  will-change: transform;
+  transform-style: preserve-3d;
+  transform-origin: center bottom;
+  backface-visibility: hidden;
+  transition: transform 0.18s cubic-bezier(0, 0, 0.2, 1);
+}
