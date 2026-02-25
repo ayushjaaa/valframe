@@ -1,3 +1,4 @@
+import MonitorCanvas from './MonitorCanvas'
 import './Hero.css'
 
 function Hero({
@@ -5,8 +6,6 @@ function Hero({
   secondaryCta = 'View Work',
   onPrimaryClick,
   onSecondaryClick,
-  mockupSrc,
-  mockupAlt = 'Valframe project mockup',
   descriptionText = 'I craft experience-driven digital products that connect brands with people — clean, purposeful, and built to last.',
 }) {
   return (
@@ -34,16 +33,14 @@ function Hero({
           </button>
         </div>
 
-        {/* ── Monitor Mockup ────────────────────────────── */}
-        {mockupSrc && (
-          <div className="hero__mockup-wrapper">
-            <img
-              className="hero__mockup"
-              src={mockupSrc}
-              alt={mockupAlt}
-            />
+        {/* ── Canvas Monitor ────────────────────────────── */}
+        <div className="hero__canvas-wrapper">
+          <div className="hero__showreel-pill" aria-hidden="true">
+            <span className="hero__showreel-dot" />
+            PLAY SHOWREEL
           </div>
-        )}
+          <MonitorCanvas />
+        </div>
 
         {/* ── Bottom Description ────────────────────────── */}
         <p className="hero__description">
