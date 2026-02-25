@@ -1,0 +1,48 @@
+/* ============================================================
+   BORDER & RADIUS TOKENS
+   Fixed scale only. No arbitrary radius values allowed.
+   ============================================================ */
+
+:root {
+
+  /* ── Border Radius ────────────────────────────────────────*/
+  --radius-xs:    2px;
+  --radius-sm:    4px;
+  --radius-md:    8px;
+  --radius-lg:    12px;
+  --radius-xl:    16px;
+  --radius-2xl:   24px;
+  --radius-3xl:   32px;
+  --radius-full:  9999px;
+
+
+  /* ── Border Color ─────────────────────────────────────────*/
+  --border-color-primary:  #E4E4E4;                          /* default — use on white bg */
+  --border-color-subtle:   rgba(228, 228, 228, 0.20);        /* on dark/gradient sections */
+  --border-color-strong:   rgba(228, 228, 228, 0.60);        /* emphasis border on dark */
+  --border-color-focus:    #FFFFFF;                          /* focus ring — always visible */
+
+
+  /* ── Border Width — 3 Variants ───────────────────────────
+     sm  → fine lines, dividers, input borders
+     md  → cards, panels, default component borders
+     lg  → emphasis borders, featured cards, CTA outlines
+  ─────────────────────────────────────────────────────────── */
+  --border-sm:   1px;
+  --border-md:   1.5px;
+  --border-lg:   2px;
+
+
+  /* ── Shorthand helpers ────────────────────────────────────
+     Usage: border: var(--border-default);
+  ─────────────────────────────────────────────────────────── */
+  --border-default:   var(--border-sm) solid var(--border-color-primary);
+  --border-emphasis:  var(--border-md) solid var(--border-color-primary);
+  --border-strong:    var(--border-lg) solid var(--border-color-primary);
+
+  /* On dark / gradient sections — use these variants */
+  --border-dark-default:  var(--border-sm) solid var(--border-color-subtle);
+  --border-dark-emphasis: var(--border-md) solid var(--border-color-subtle);
+  --border-dark-strong:   var(--border-lg) solid var(--border-color-strong);
+
+}

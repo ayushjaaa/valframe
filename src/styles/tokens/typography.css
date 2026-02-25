@@ -1,0 +1,196 @@
+/* ============================================================
+   TYPOGRAPHY TOKENS — Hybrid Font System
+   Two complete, parallel type scales: Gravity + Suisse.
+   Pattern: --[fontname]-[role]-[property]
+     fs  = font-size
+     lh  = line-height
+     ls  = letter-spacing
+     wt  = font-weight
+   ============================================================ */
+
+:root {
+
+  /* ── Font Families ────────────────────────────────────────*/
+
+  /* ABC Gravity */
+  --font-gravity:            'ABCGravity', sans-serif;           /* variable — use font-variation-settings: 'wdth' */
+  --font-gravity-normal:     'ABCGravity-Normal', sans-serif;
+  --font-gravity-condensed:  'ABCGravity-Condensed', sans-serif;
+  --font-gravity-compressed: 'ABCGravity-Compressed', sans-serif;
+  --font-gravity-expanded:   'ABCGravity-Expanded', sans-serif;
+  --font-gravity-wide:       'ABCGravity-Wide', sans-serif;
+
+  /* Suisse */
+  --font-suisse:             'SuisseIntl', sans-serif;
+  --font-suisse-cond:        'SuisseIntlCond', sans-serif;
+  --font-suisse-screen:      'SuisseScreen', sans-serif;
+  --font-suisse-mono:        'SuisseMono', monospace;
+
+
+  /* ── Font Weights ─────────────────────────────────────────*/
+  --wt-thin:       100;
+  --wt-light:      300;
+  --wt-regular:    400;
+  --wt-medium:     500;
+  --wt-semibold:   600;
+  --wt-bold:       700;
+  --wt-black:      900;
+
+
+  /* ── Line Heights ─────────────────────────────────────────*/
+  --lh-none:       1;
+  --lh-tight:      1.1;
+  --lh-snug:       1.3;
+  --lh-normal:     1.5;
+  --lh-relaxed:    1.7;
+  --lh-loose:      2;
+
+
+  /* ================================================================
+     ABC GRAVITY — Full Type Scale
+     Use for: hero titles, display, editorial moments, large headings
+  ================================================================ */
+
+  /* Display Primary — Largest hero statement */
+  --gravity-display-primary-fs:    clamp(4rem, 10vw, 9rem);
+  --gravity-display-primary-lh:    var(--lh-none);
+  --gravity-display-primary-ls:    -0.03em;
+  --gravity-display-primary-wt:    var(--wt-bold);
+
+  /* Display Secondary — Sub-hero, large section openers */
+  --gravity-display-secondary-fs:  clamp(2.75rem, 6vw, 6rem);
+  --gravity-display-secondary-lh:  var(--lh-tight);
+  --gravity-display-secondary-ls:  -0.02em;
+  --gravity-display-secondary-wt:  var(--wt-bold);
+
+  /* Heading Primary — h1 equivalent */
+  --gravity-heading-primary-fs:    clamp(2rem, 4vw, 3.5rem);
+  --gravity-heading-primary-lh:    var(--lh-tight);
+  --gravity-heading-primary-ls:    -0.02em;
+  --gravity-heading-primary-wt:    var(--wt-bold);
+
+  /* Heading Secondary — h2 equivalent */
+  --gravity-heading-secondary-fs:  clamp(1.5rem, 3vw, 2.5rem);
+  --gravity-heading-secondary-lh:  var(--lh-snug);
+  --gravity-heading-secondary-ls:  -0.01em;
+  --gravity-heading-secondary-wt:  var(--wt-semibold);
+
+  /* Heading Tertiary — h3 equivalent */
+  --gravity-heading-tertiary-fs:   clamp(1.25rem, 2.5vw, 1.875rem);
+  --gravity-heading-tertiary-lh:   var(--lh-snug);
+  --gravity-heading-tertiary-ls:   -0.01em;
+  --gravity-heading-tertiary-wt:   var(--wt-semibold);
+
+  /* Heading Quaternary — h4 equivalent */
+  --gravity-heading-quaternary-fs: clamp(1.125rem, 2vw, 1.5rem);
+  --gravity-heading-quaternary-lh: var(--lh-snug);
+  --gravity-heading-quaternary-ls: 0em;
+  --gravity-heading-quaternary-wt: var(--wt-medium);
+
+  /* Body Primary — Large body / lead paragraph */
+  --gravity-body-primary-fs:       1.125rem;   /* 18px */
+  --gravity-body-primary-lh:       var(--lh-relaxed);
+  --gravity-body-primary-wt:       var(--wt-regular);
+
+  /* Body Secondary — Standard body */
+  --gravity-body-secondary-fs:     1rem;       /* 16px */
+  --gravity-body-secondary-lh:     var(--lh-normal);
+  --gravity-body-secondary-wt:     var(--wt-regular);
+
+  /* Body Tertiary — Small body */
+  --gravity-body-tertiary-fs:      0.875rem;   /* 14px */
+  --gravity-body-tertiary-lh:      var(--lh-normal);
+  --gravity-body-tertiary-wt:      var(--wt-regular);
+
+  /* Label Primary — UI labels, nav, buttons */
+  --gravity-label-primary-fs:      0.875rem;   /* 14px */
+  --gravity-label-primary-lh:      var(--lh-snug);
+  --gravity-label-primary-ls:      0.04em;
+  --gravity-label-primary-wt:      var(--wt-medium);
+
+  /* Label Secondary — Tags, small badges */
+  --gravity-label-secondary-fs:    0.75rem;    /* 12px */
+  --gravity-label-secondary-lh:    var(--lh-snug);
+  --gravity-label-secondary-ls:    0.06em;
+  --gravity-label-secondary-wt:    var(--wt-medium);
+
+  /* Caption Primary — Footnotes, image captions, fine print */
+  --gravity-caption-primary-fs:    0.75rem;    /* 12px */
+  --gravity-caption-primary-lh:    var(--lh-normal);
+  --gravity-caption-primary-wt:    var(--wt-regular);
+
+
+  /* ================================================================
+     SUISSE — Full Type Scale
+     Use for: body text, UI, navigation, labels, data, captions
+  ================================================================ */
+
+  /* Display Primary */
+  --suisse-display-primary-fs:     clamp(4rem, 10vw, 9rem);
+  --suisse-display-primary-lh:     var(--lh-none);
+  --suisse-display-primary-ls:     -0.03em;
+  --suisse-display-primary-wt:     var(--wt-bold);
+
+  /* Display Secondary */
+  --suisse-display-secondary-fs:   clamp(2.75rem, 6vw, 6rem);
+  --suisse-display-secondary-lh:   var(--lh-tight);
+  --suisse-display-secondary-ls:   -0.02em;
+  --suisse-display-secondary-wt:   var(--wt-bold);
+
+  /* Heading Primary — h1 */
+  --suisse-heading-primary-fs:     clamp(2rem, 4vw, 3.5rem);
+  --suisse-heading-primary-lh:     var(--lh-tight);
+  --suisse-heading-primary-ls:     -0.02em;
+  --suisse-heading-primary-wt:     var(--wt-bold);
+
+  /* Heading Secondary — h2 */
+  --suisse-heading-secondary-fs:   clamp(1.5rem, 3vw, 2.5rem);
+  --suisse-heading-secondary-lh:   var(--lh-snug);
+  --suisse-heading-secondary-ls:   -0.01em;
+  --suisse-heading-secondary-wt:   var(--wt-semibold);
+
+  /* Heading Tertiary — h3 */
+  --suisse-heading-tertiary-fs:    clamp(1.25rem, 2.5vw, 1.875rem);
+  --suisse-heading-tertiary-lh:    var(--lh-snug);
+  --suisse-heading-tertiary-ls:    -0.01em;
+  --suisse-heading-tertiary-wt:    var(--wt-semibold);
+
+  /* Heading Quaternary — h4 */
+  --suisse-heading-quaternary-fs:  clamp(1.125rem, 2vw, 1.5rem);
+  --suisse-heading-quaternary-lh:  var(--lh-snug);
+  --suisse-heading-quaternary-ls:  0em;
+  --suisse-heading-quaternary-wt:  var(--wt-medium);
+
+  /* Body Primary — Lead paragraph */
+  --suisse-body-primary-fs:        1.125rem;   /* 18px */
+  --suisse-body-primary-lh:        var(--lh-relaxed);
+  --suisse-body-primary-wt:        var(--wt-regular);
+
+  /* Body Secondary — Standard body */
+  --suisse-body-secondary-fs:      1rem;       /* 16px */
+  --suisse-body-secondary-lh:      var(--lh-normal);
+  --suisse-body-secondary-wt:      var(--wt-regular);
+
+  /* Body Tertiary — Small body */
+  --suisse-body-tertiary-fs:       0.875rem;   /* 14px */
+  --suisse-body-tertiary-lh:       var(--lh-normal);
+  --suisse-body-tertiary-wt:       var(--wt-regular);
+
+  /* Label Primary — UI labels, nav, buttons */
+  --suisse-label-primary-fs:       0.875rem;   /* 14px */
+  --suisse-label-primary-lh:       var(--lh-snug);
+  --suisse-label-primary-ls:       0.04em;
+  --suisse-label-primary-wt:       var(--wt-medium);
+
+  /* Label Secondary — Tags, badges */
+  --suisse-label-secondary-fs:     0.75rem;    /* 12px */
+  --suisse-label-secondary-lh:     var(--lh-snug);
+  --suisse-label-secondary-ls:     0.06em;
+  --suisse-label-secondary-wt:     var(--wt-medium);
+
+  /* Caption Primary — Fine print, captions */
+  --suisse-caption-primary-fs:     0.75rem;    /* 12px */
+  --suisse-caption-primary-lh:     var(--lh-normal);
+  --suisse-caption-primary-wt:     var(--wt-regular);
+
+}

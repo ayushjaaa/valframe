@@ -1,0 +1,18 @@
+/* ============================================================
+   Z-INDEX TOKENS
+   Fixed layer system. Never use raw z-index numbers.
+   ============================================================ */
+
+:root {
+
+  --z-below:     -1;     /* behind background */
+  --z-base:       0;     /* default document flow */
+  --z-raised:    10;     /* slightly above — floating elements */
+  --z-dropdown: 100;     /* dropdowns, menus */
+  --z-sticky:   200;     /* sticky nav, floating headers */
+  --z-overlay:  300;     /* page overlays, backdrops */
+  --z-modal:    400;     /* modals, dialogs */
+  --z-toast:    500;     /* toast notifications */
+  --z-tooltip:  600;     /* tooltips — must always be on top */
+
+}

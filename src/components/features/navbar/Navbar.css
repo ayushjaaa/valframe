@@ -1,0 +1,105 @@
+/* ============================================================
+   NAVBAR
+   Transparent floating navbar over dark hero section.
+   data-section="dark" context — all tokens adapt automatically.
+   ============================================================ */
+
+.navbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: var(--z-sticky);
+  padding-block: var(--space-6);
+}
+
+.navbar__container {
+  width: 100%;
+  max-width: var(--container-max-width);
+  margin-inline: auto;
+  padding-inline: var(--container-padding);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-8);
+}
+
+/* ── Logo ─────────────────────────────────────────────────── */
+.navbar__logo {
+  font-family: var(--font-suisse);
+  font-size: var(--suisse-label-primary-fs);
+  font-weight: var(--wt-semibold);
+  line-height: var(--suisse-label-primary-lh);
+  letter-spacing: var(--suisse-label-primary-ls);
+  color: var(--color-text-primary);
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+
+/* ── Menu ─────────────────────────────────────────────────── */
+.navbar__menu {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+}
+
+.navbar__link {
+  font-family: var(--font-suisse);
+  font-size: var(--suisse-label-primary-fs);
+  font-weight: var(--suisse-label-primary-wt);
+  line-height: var(--suisse-label-primary-lh);
+  color: var(--color-text-primary);
+  opacity: 0.7;
+  transition: opacity var(--transition-hover);
+  white-space: nowrap;
+}
+
+.navbar__link:hover {
+  opacity: 1;
+}
+
+/* ── CTA Button ───────────────────────────────────────────── */
+.navbar__cta {
+  flex-shrink: 0;
+}
+
+.navbar__btn {
+  font-family: var(--font-suisse);
+  font-size: var(--suisse-label-primary-fs);
+  font-weight: var(--suisse-label-primary-wt);
+  line-height: var(--suisse-label-primary-lh);
+  letter-spacing: var(--suisse-label-primary-ls);
+  color: var(--color-cta-secondary-text);
+  background: var(--color-cta-secondary-bg);
+  border: var(--border-sm) solid var(--color-cta-secondary-border);
+  border-radius: var(--radius-full);
+  padding: var(--space-2) var(--space-6);
+  cursor: pointer;
+  transition: background var(--transition-hover), border-color var(--transition-hover);
+  white-space: nowrap;
+}
+
+.navbar__btn:hover {
+  background: var(--color-cta-secondary-hover);
+}
+
+/* ── Responsive ───────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .navbar__menu {
+    display: none;
+  }
+
+  .navbar__container {
+    justify-content: space-between;
+  }
+}
+
+@media (max-width: 640px) {
+  .navbar {
+    padding-block: var(--space-4);
+  }
+
+  .navbar__container {
+    padding-inline: var(--container-padding-sm);
+  }
+}

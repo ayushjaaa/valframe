@@ -1,0 +1,40 @@
+/* ============================================================
+   SHADOW / ELEVATION TOKENS
+   4 elevation levels. Use consistently — no random shadows.
+   ============================================================ */
+
+:root {
+
+  /* ── Elevation Scale ──────────────────────────────────────*/
+  --shadow-1:   0 1px 2px rgba(0, 0, 0, 0.06),
+                0 1px 3px rgba(0, 0, 0, 0.10);
+
+  --shadow-2:   0 2px 4px rgba(0, 0, 0, 0.06),
+                0 4px 12px rgba(0, 0, 0, 0.10);
+
+  --shadow-3:   0 4px 8px rgba(0, 0, 0, 0.08),
+                0 8px 24px rgba(0, 0, 0, 0.12);
+
+  --shadow-4:   0 8px 16px rgba(0, 0, 0, 0.10),
+                0 16px 48px rgba(0, 0, 0, 0.15);
+
+  /* ── Semantic Assignment ──────────────────────────────────
+     shadow-1 → subtle card, chip, tag
+     shadow-2 → card, panel, dropdown
+     shadow-3 → modal, overlay, popover
+     shadow-4 → full-screen overlay, floating panel
+  ─────────────────────────────────────────────────────────── */
+  --shadow-card:     var(--shadow-1);
+  --shadow-dropdown: var(--shadow-2);
+  --shadow-modal:    var(--shadow-3);
+  --shadow-overlay:  var(--shadow-4);
+
+  /* ── Brand Glow (optional, fill in brand color) ───────────*/
+  --shadow-glow-primary:  0 0 40px rgba(0, 0, 0, 0.0);  /* replace rgba with brand color */
+  --shadow-glow-accent:   0 0 40px rgba(0, 0, 0, 0.0);
+
+  /* ── Inset Shadows ────────────────────────────────────────*/
+  --shadow-inset-sm:  inset 0 1px 2px rgba(0, 0, 0, 0.06);
+  --shadow-inset-md:  inset 0 2px 4px rgba(0, 0, 0, 0.10);
+
+}

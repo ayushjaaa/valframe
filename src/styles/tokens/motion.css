@@ -1,0 +1,47 @@
+/* ============================================================
+   MOTION TOKENS
+   Fixed durations and easing curves.
+   No random animation timings allowed.
+   ============================================================ */
+
+:root {
+
+  /* ── Duration ─────────────────────────────────────────────*/
+  --duration-instant:   50ms;
+  --duration-fast:      100ms;
+  --duration-normal:    200ms;
+  --duration-moderate:  300ms;
+  --duration-slow:      400ms;
+  --duration-deliberate:600ms;
+
+  /* ── Easing Curves ────────────────────────────────────────*/
+  --ease-default:   cubic-bezier(0.4, 0, 0.2, 1);   /* standard — smooth in and out */
+  --ease-in:        cubic-bezier(0.4, 0, 1, 1);      /* accelerate */
+  --ease-out:       cubic-bezier(0, 0, 0.2, 1);      /* decelerate — best for enter animations */
+  --ease-spring:    cubic-bezier(0.34, 1.56, 0.64, 1); /* slight overshoot — UI feel */
+  --ease-linear:    linear;
+
+  /* ── Semantic Transitions ─────────────────────────────────
+     Compose duration + easing for common patterns.
+  ─────────────────────────────────────────────────────────── */
+  --transition-hover:     var(--duration-fast) var(--ease-default);
+  --transition-ui:        var(--duration-normal) var(--ease-default);
+  --transition-enter:     var(--duration-moderate) var(--ease-out);
+  --transition-exit:      var(--duration-normal) var(--ease-in);
+  --transition-layout:    var(--duration-slow) var(--ease-default);
+
+}
+
+/* ── Reduced Motion ─────────────────────────────────────────
+   Always include this. Accessibility requirement.
+────────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

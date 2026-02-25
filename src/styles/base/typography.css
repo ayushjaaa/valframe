@@ -1,0 +1,64 @@
+/* ============================================================
+   BASE TYPOGRAPHY
+   Sets default body type. All values from token system.
+   ============================================================ */
+
+body {
+  font-family: var(--font-suisse);
+  font-size: var(--suisse-body-secondary-fs);
+  font-weight: var(--suisse-body-secondary-wt);
+  line-height: var(--suisse-body-secondary-lh);
+  color: var(--color-text-primary);
+  background-color: var(--color-background);
+}
+
+/* ── Heading defaults (unstyled — components set these) ─────*/
+h1, h2, h3, h4, h5, h6 {
+  font-weight: var(--wt-bold);
+  line-height: var(--lh-tight);
+  color: var(--color-text-primary);
+}
+
+p {
+  color: var(--color-text-secondary);
+}
+
+strong, b {
+  font-weight: var(--wt-semibold);
+}
+
+small {
+  font-size: var(--suisse-body-tertiary-fs);
+}
+
+code, pre, kbd {
+  font-family: var(--font-suisse-mono);
+  font-size: 0.9em;
+}
+
+/* ── Container utility ───────────────────────────────────────*/
+.container {
+  width: 100%;
+  max-width: var(--container-max-width);
+  margin-inline: auto;
+  padding-inline: var(--container-padding);
+}
+
+@media (max-width: 640px) {
+  .container {
+    padding-inline: var(--container-padding-sm);
+  }
+}
+
+/* ── Screen reader only ──────────────────────────────────────*/
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}

@@ -1,0 +1,45 @@
+/* ============================================================
+   THEME
+   Base theme is white (#FFFFFF background).
+   Dark sections use data-section="dark" on individual sections —
+   they are NOT a full page dark mode, they are dark panel areas
+   with #0A090B background.
+   Components never change. Only token values are swapped.
+   ============================================================ */
+
+
+/* ── Base (default — white background) ───────────────────────
+   Already defined in colors.css :root. Nothing to add here.
+────────────────────────────────────────────────────────────── */
+
+
+/* ── Dark Section panels ─────────────────────────────────────
+   Apply data-section="dark" on any <section> that uses
+   the #0A090B dark background. Text, border and CTA tokens
+   automatically adapt — no component changes needed.
+
+   Usage in JSX:
+     <section className="hero" data-section="dark">
+────────────────────────────────────────────────────────────── */
+[data-section="dark"] {
+
+  --color-background:          #0A090B;
+  --color-surface:             #111013;
+  --color-surface-hover:       #18161A;
+  --color-divider:             rgba(228, 228, 228, 0.08);
+
+  --color-text-primary:        #FFFFFF;
+  --color-text-secondary:      #A3A3A3;
+  --color-text-muted:          #525252;
+  --color-text-inverse:        #0A090B;
+
+  --color-border-primary:      rgba(228, 228, 228, 0.20);
+  --border-color-primary:      rgba(228, 228, 228, 0.20);
+  --border-color-subtle:       rgba(228, 228, 228, 0.10);
+  --border-color-strong:       rgba(228, 228, 228, 0.50);
+
+  --color-cta-secondary-text:  #FFFFFF;
+  --color-cta-secondary-border:#E4E4E4;
+  --color-cta-secondary-hover: rgba(255, 255, 255, 0.08);
+
+}

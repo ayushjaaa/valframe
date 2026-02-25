@@ -1,0 +1,10 @@
+/* ============================================================
+   HOME PAGE
+   Composition only — no styling logic here.
+   All section styles live in their own feature CSS files.
+   ============================================================ */
+
+.home {
+  width: 100%;
+  overflow-x: hidden;
+}
