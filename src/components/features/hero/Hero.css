@@ -354,24 +354,31 @@
   4. Canvas / monitor                    — fills remaining space at bottom
 */
 @media (max-width: 640px) {
+  /* Natural height — content stays in dark gradient zone */
   .hero {
-    height: 100dvh;
+    height: auto;
   }
 
   .hero__sticky {
     position: relative;
-    height: 100dvh;
+    height: auto;
   }
 
+  /*
+    8pt system:
+    padding-top: 96px (var(--space-24)) — clears navbar + breathing room
+    padding-bottom: 80px (var(--space-20))
+    gap: 32px (var(--space-8)) — consistent rhythm between blocks
+  */
   .hero__container {
     padding-inline: var(--container-padding-sm);
-    padding-top: 0;
-    padding-bottom: 0;
-    gap: var(--space-5);
-    overflow: hidden;
-    justify-content: center;
+    padding-top: var(--space-24);
+    padding-bottom: var(--space-20);
+    gap: var(--space-8);
+    overflow: visible;
+    justify-content: flex-start;
     align-items: center;
-    flex: 1;
+    flex: none;
   }
 
   /* Hide desktop heading */
@@ -379,30 +386,99 @@
     display: none;
   }
 
-  /* Show mobile heading — 2 lines, centered */
+  /* Mobile heading block */
   .hero__heading-block--mobile {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-4);   /* 16px between heading and subheading — 8pt system */
     width: 100%;
     text-align: center;
   }
 
-  /* Larger display size — fills width confidently */
+  /*
+    Heading: 13vw = ~51px on 390px
+    Line 1 "WE BUILD"      — white, black weight, dominant
+    Line 2 "Web Solutions" — 1.15em, italic grey — secondary rhythm
+    Line-height: 1.1 (large text rule)
+  */
   .hero__heading--mobile {
-    font-size: clamp(2.6rem, 13vw, 4rem);
+    font-size: clamp(2.8rem, 13vw, 4.2rem);
+    line-height: 1.1;
+    gap: var(--space-1);
   }
 
-  /* Two-column info strip */
+  .hero__heading--mobile .hero__line:first-child {
+    color: var(--color-text-primary);
+    font-weight: var(--wt-black);
+  }
+
+  .hero__line--accent {
+    font-size: 1.12em;
+    letter-spacing: -0.03em;
+  }
+
+  /*
+    Subheading: 18px, line-height 1.5
+    Clarifies value proposition — answers "what do you build for whom"
+    Color: secondary (readable, not invisible)
+  */
+  .hero__subheading--mobile {
+    font-family: var(--font-suisse);
+    font-size: 1.125rem;           /* 18px */
+    font-weight: var(--wt-regular);
+    line-height: 1.5;
+    color: var(--color-text-secondary);
+    letter-spacing: 0em;
+    text-align: center;
+    max-width: 28ch;               /* ~45 chars — ideal line length */
+    margin: 0;
+  }
+
+  /*
+    CTA row: gap 16px (8pt), buttons 56px tall
+    Primary dominates via filled background
+    Secondary is restrained via outline
+    Both same height — aligned, professional
+  */
+  .hero__actions {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: var(--space-4);           /* 16px */
+    width: 100%;
+    justify-content: center;
+  }
+
+  .hero__btn {
+    height: 56px;
+    flex: 1;
+    max-width: 172px;
+    justify-content: center;
+    padding-inline: var(--space-6); /* 24px */
+    padding-block: 0;
+    font-size: 1rem;               /* 16px button text */
+    font-weight: var(--wt-medium);
+    letter-spacing: 0.01em;
+    line-height: 1;
+  }
+
+  /*
+    Description: single column, 16px, 1.6 line-height
+    Readable, not decorative
+    color-text-secondary = visible on dark bg
+  */
   .hero__description {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-3);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
     position: static;
     width: 100%;
     text-align: center;
     font-family: var(--font-suisse);
-    font-size: clamp(0.58rem, 2.5vw, 0.7rem);
-    color: var(--color-text-muted);
-    letter-spacing: 0.05em;
+    font-size: 0.75rem;            /* 12px — purposefully small, label-style */
+    color: var(--color-text-secondary);
+    letter-spacing: 0.08em;
     text-transform: uppercase;
     line-height: 1.6;
   }
@@ -411,29 +487,11 @@
     white-space: pre-line;
   }
 
-  /* Show CTA buttons on mobile */
-  .hero__actions {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    gap: var(--space-3);
-    width: 100%;
-    justify-content: center;
-  }
-
-  .hero__btn {
-    flex: 1;
-    max-width: 160px;
-    justify-content: center;
-    padding: var(--space-3) var(--space-4);
-  }
-
-  /* Hide pill on mobile */
+  /* Hide cursor pill and canvas on touch */
   .hero__showreel-pill {
     display: none;
   }
 
-  /* Hide canvas entirely on mobile */
   .hero__canvas-wrapper {
     display: none;
   }

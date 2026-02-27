@@ -23,6 +23,7 @@ function Hero({
   onSecondaryClick,
   descriptionLeft = 'Web Design & Development\nIndia 🌐 Worldwide',
   descriptionRight = 'Digital Studio +\nValframe Solution',
+  mobileSubheading = 'High-converting websites for startups & businesses.',
 }) {
   const pillRef     = useRef(null)
   const canvasRef   = useRef(null)   // set via MonitorCanvas callback ref
@@ -81,6 +82,7 @@ function Hero({
             <span className="hero__line">We Build</span>
             <span className="hero__line hero__line--accent">Web Solutions</span>
           </h1>
+          <p className="hero__subheading--mobile">{mobileSubheading}</p>
         </div>
 
         {/* ── Buttons Row ───────────────────────────────── */}
