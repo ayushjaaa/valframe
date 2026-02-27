@@ -27,6 +27,13 @@ function useMonitorScroll(elementRef, onProgress, options = {}) {
     const el = elementRef.current
     if (!el) return
 
+    // On mobile (≤640px) skip scroll animation entirely — lock at face-on (prog=1)
+    if (window.innerWidth <= 640) {
+      el.style.transform = `scale(1) translateY(0px)`
+      if (onProgress) onProgress(1)
+      return
+    }
+
     function update() {
       const scrollY   = window.scrollY
       const maxScroll = window.innerHeight * maxScrollFactor

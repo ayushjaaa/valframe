@@ -331,7 +331,7 @@
 @media (max-width: 768px) {
   .hero__container {
     padding-top: 12vh;
-    gap: var(--space-8);
+    gap: var(--space-4);
   }
 
   .hero__heading-block {
@@ -339,13 +339,13 @@
   }
 
   .hero__heading {
-    font-size: clamp(1.75rem, 4vw, 2.75rem);
+    font-size: clamp(1.75rem, 4.5vw, 2.75rem);
     letter-spacing: -0.01em;
   }
 
   .hero__canvas-wrapper {
-    height: 65vh;
-    margin-top: -15vh;
+    height: 48vh;
+    margin-top: -8vh;
   }
 
   .hero__mockup-wrapper {
@@ -356,29 +356,61 @@
 
 /* 640px and below: phones */
 @media (max-width: 640px) {
+  /* No scroll animation — collapse the 200vh section to a single viewport */
+  .hero {
+    height: 100dvh;
+  }
+
+  /* Sticky is still needed for layout but no longer scrolls */
+  .hero__sticky {
+    position: relative;
+    height: 100dvh;
+  }
+
   .hero__container {
     padding-inline: var(--container-padding-sm);
-    padding-top: 10vh;
-    gap: var(--space-6);
+    padding-top: 18vw;   /* ~70px on 390px phone, feels natural below navbar */
+    gap: var(--space-4);
+    overflow: visible;
   }
 
   .hero__heading {
-    font-size: clamp(1.5rem, 6vw, 2rem);
+    font-size: clamp(1.6rem, 7.5vw, 2.2rem);
+    line-height: 1.18;
+    letter-spacing: -0.02em;
   }
 
+  /* Canvas: no scroll-scale animation runs, prog locked at 1 (face-on) */
   .hero__canvas-wrapper {
-    height: 60vh;
-    margin-top: -12vh;
+    height: 38vh;
+    margin-top: -4vh;
+    overflow: hidden;
   }
 
+  /* Buttons side by side — hero feel, not form feel */
   .hero__actions {
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
+    justify-content: center;
+    flex-wrap: nowrap;
+    gap: var(--space-3);
   }
 
   .hero__btn {
-    width: 100%;
+    flex: 1;
+    max-width: 164px;
     justify-content: center;
+    padding: var(--space-2) var(--space-4);
+  }
+
+  /* Description hidden — viewport too small, content competes with heading */
+  .hero__description {
+    display: none;
+  }
+
+  /* Pill cursor hover is meaningless on touch */
+  .hero__showreel-pill {
+    display: none;
   }
 
   .hero__mockup-wrapper {

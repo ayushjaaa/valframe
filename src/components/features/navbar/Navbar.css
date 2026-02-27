@@ -94,10 +94,114 @@
   background: var(--color-cta-secondary-hover);
 }
 
+/* ── Hamburger ─────────────────────────────────────────────── */
+.navbar__hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 36px;
+  height: 36px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.navbar__hamburger-bar {
+  display: block;
+  width: 22px;
+  height: 1.5px;
+  background-color: var(--color-text-primary);
+  border-radius: var(--radius-full);
+  transition: transform var(--duration-medium) var(--ease-default),
+              opacity var(--duration-fast) var(--ease-default);
+  transform-origin: center;
+}
+
+/* X shape when open */
+.navbar__hamburger--open .navbar__hamburger-bar:nth-child(1) {
+  transform: translateY(6.5px) rotate(45deg);
+}
+.navbar__hamburger--open .navbar__hamburger-bar:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+.navbar__hamburger--open .navbar__hamburger-bar:nth-child(3) {
+  transform: translateY(-6.5px) rotate(-45deg);
+}
+
+
+/* ── Mobile Drawer ─────────────────────────────────────────── */
+.navbar__drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(320px, 85vw);
+  background: #0d0c0e;
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
+  z-index: var(--z-modal);
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-20) var(--space-6) var(--space-10);
+  gap: var(--space-8);
+  transform: translateX(100%);
+  transition: transform var(--duration-slow) var(--ease-out);
+}
+
+.navbar__drawer--open {
+  transform: translateX(0);
+}
+
+.navbar__drawer-menu {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.navbar__drawer-link {
+  font-family: var(--font-suisse);
+  font-size: var(--suisse-heading-quaternary-fs);
+  font-weight: var(--suisse-heading-quaternary-wt);
+  line-height: var(--suisse-heading-quaternary-lh);
+  color: var(--color-text-primary);
+  opacity: 0.7;
+  transition: opacity var(--transition-hover);
+}
+
+.navbar__drawer-link:hover {
+  opacity: 1;
+}
+
+.navbar__drawer-cta {
+  margin-top: auto;
+}
+
+/* ── Overlay ───────────────────────────────────────────────── */
+.navbar__overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: calc(var(--z-modal) - 1);
+  backdrop-filter: blur(2px);
+}
+
+
 /* ── Responsive ───────────────────────────────────────────── */
 @media (max-width: 768px) {
   .navbar__menu {
     display: none;
+  }
+
+  .navbar__cta {
+    display: none;
+  }
+
+  .navbar__hamburger {
+    display: flex;
   }
 
   .navbar__container {
