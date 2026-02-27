@@ -1,23 +1,33 @@
 /* ============================================================
    HERO SECTION
    Dark full-viewport hero with large display heading,
-   highlighted spans, CTA buttons, tilted mockup image,
+   highlighted spans, CTA buttons, 3D monitor canvas,
    and floating bottom-right description text.
+
+   UNIT SYSTEM — Production rules:
+   - All layout-critical vertical values: vh / dvh
+   - All layout-critical horizontal values: vw or %
+   - Typography: clamp() with vw fluid middle value
+   - Spacing rhythm: CSS spacing tokens (rem-based) only
+   - Zero raw px on anything that must scale across screens
    ============================================================ */
+
 
 /* ── Section ──────────────────────────────────────────────── */
 .hero {
   position: relative;
   width: 100%;
-  height: 200vh; /* tall so scroll animation has room to play */
+  height: 200vh;
 }
 
-/* Sticky panel — stays locked to viewport while user scrolls through hero */
+
+/* ── Sticky panel ─────────────────────────────────────────── */
 .hero__sticky {
   position: sticky;
   top: 0;
   width: 100%;
   height: 100vh;
+  height: 100dvh; /* fallback above, dynamic for mobile chrome */
   overflow: hidden;
   background:
     radial-gradient(
@@ -37,14 +47,20 @@
   flex-direction: column;
 }
 
+
 /* ── Container ────────────────────────────────────────────── */
+/*
+   Your screen (1470×956px):
+   padding-top target = ~144px above content = 15.1vh
+   We use 15vh as the reference — scales identically on all screens.
+*/
 .hero__container {
   position: relative;
   width: 100%;
   max-width: var(--container-max-width);
   margin-inline: auto;
   padding-inline: var(--container-padding);
-  padding-top: calc(var(--space-24) + var(--space-12)); /* account for floating navbar */
+  padding-top: 15vh;
   padding-bottom: 0;
   display: flex;
   flex-direction: column;
@@ -53,16 +69,23 @@
   overflow: hidden;
 }
 
+
 /* ── Heading Block ────────────────────────────────────────── */
 .hero__heading-block {
-  max-width: 920px;
+  max-width: 62.5vw;   /* 920px ÷ 1470px = 62.6% — scales with viewport */
   text-align: center;
   align-self: center;
 }
 
 .hero__heading {
   font-family: var(--font-suisse);
-  font-size: clamp(2rem, 4.5vw, 4rem);
+  /*
+    Your screen 1470px: 4.5vw = 66px (design target ~60-64px)
+    11" at 1366px: 4.5vw = 61px — proportionally correct
+    12" at 1280px: 4.5vw = 58px — proportionally correct
+    clamp floor (2rem) only kicks in below ~445px wide
+  */
+  font-size: clamp(2rem, 4.5vw, 4.5rem);
   font-weight: var(--wt-regular);
   line-height: var(--lh-snug);
   letter-spacing: -0.01em;
@@ -72,19 +95,17 @@
   gap: var(--space-1);
 }
 
-/* Each line of the heading */
 .hero__line {
   display: block;
 }
 
+
 /* ── Highlight Variants ───────────────────────────────────── */
 
-/* "Valframe" — blue text */
 .hero__highlight--blue {
   color: var(--color-info);
 }
 
-/* "Web Solution" — white text on blue pill */
 .hero__pill--blue {
   display: inline-flex;
   align-items: center;
@@ -97,7 +118,6 @@
   vertical-align: baseline;
 }
 
-/* "India" — outlined pill, transparent bg, white border + text */
 .hero__highlight--white {
   display: inline-flex;
   align-items: center;
@@ -110,6 +130,7 @@
   line-height: inherit;
   vertical-align: baseline;
 }
+
 
 /* ── CTA Buttons Row ──────────────────────────────────────── */
 .hero__actions {
@@ -137,7 +158,6 @@
   white-space: nowrap;
 }
 
-/* Primary — white fill, dark text */
 .hero__btn--primary {
   background: var(--color-cta-primary-bg);
   color: var(--color-cta-primary-text);
@@ -148,7 +168,6 @@
   background: var(--color-cta-primary-hover);
 }
 
-/* Secondary — transparent, white border */
 .hero__btn--secondary {
   background: var(--color-cta-secondary-bg);
   color: var(--color-cta-secondary-text);
@@ -165,7 +184,8 @@
   line-height: 1;
 }
 
-/* ── Monitor Mockup ───────────────────────────────────────── */
+
+/* ── Monitor Mockup (static image fallback — not the 3D canvas) ── */
 .hero__mockup-wrapper {
   width: 80%;
   max-width: 900px;
@@ -184,6 +204,7 @@
   border-radius: var(--radius-lg);
 }
 
+
 /* ── Play Showreel Pill ───────────────────────────────────── */
 .hero__showreel-pill {
   display: inline-flex;
@@ -200,9 +221,8 @@
   padding: var(--space-2) var(--space-3);
   pointer-events: none;
   user-select: none;
-  align-self: center;
 
-  /* Hidden by default — shown on canvas hover, follows mouse via JS */
+  /* Follows cursor via JS absolute positioning */
   position: absolute;
   top: 50%;
   left: 50%;
@@ -221,23 +241,42 @@
   flex-shrink: 0;
 }
 
+.hero__showreel-pill--visible {
+  opacity: 1;
+}
+
+
 /* ── Canvas Wrapper ───────────────────────────────────────── */
+/*
+   Reference (your 1470×956px screen):
+   - Canvas height target: 70vh → keeps on all screens
+   - margin-top target: -180px ÷ 956px = -18.8vh → use -19vh
+
+   This means on EVERY screen:
+   - 11" (1366×768):  -19vh = -146px, height = 70vh = 538px
+   - 12" (1280×800):  -19vh = -152px, height = 70vh = 560px
+   - 14" (1440×900):  -19vh = -171px, height = 70vh = 630px
+   - Your screen:     -19vh = -182px, height = 70vh = 669px
+   Proportionally identical across all screens.
+*/
 .hero__canvas-wrapper {
   position: relative;
   width: 100%;
   height: 70vh;
   overflow: visible;
-  margin-top: -180px;
+  margin-top: -19vh;
 }
 
-.hero__showreel-pill--visible {
-  opacity: 1;
-}
 
 /* ── Bottom Right Description ─────────────────────────────── */
+/*
+   bottom: 48px ÷ 956px = 5vh on your screen — use 5vh.
+   This keeps it exactly at the same proportional position on all screens.
+   Only collapses to static below 1280px where layout is too narrow.
+*/
 .hero__description {
   position: absolute;
-  bottom: var(--space-12);
+  bottom: 5vh;
   right: var(--container-padding);
   max-width: 280px;
   font-family: var(--font-suisse);
@@ -248,8 +287,34 @@
   text-align: right;
 }
 
+
 /* ── Responsive ───────────────────────────────────────────── */
+
+/*
+   1280px: 11"–12" laptops (1280×800, 1366×768)
+   All vh-based values stay identical — no canvas changes needed.
+   Only the description collapses to static because the viewport
+   is now narrow enough that absolute positioning risks overlap.
+*/
+@media (max-width: 1280px) {
+  .hero__heading-block {
+    max-width: 72vw;
+  }
+
+  .hero__description {
+    position: static;
+    max-width: 100%;
+    text-align: left;
+    margin-top: var(--space-4);
+  }
+}
+
+/* 1024px and below: tablets and small laptops */
 @media (max-width: 1024px) {
+  .hero__heading-block {
+    max-width: 85vw;
+  }
+
   .hero__mockup-wrapper {
     width: 90%;
   }
@@ -262,15 +327,25 @@
   }
 }
 
+/* 768px and below: tablets in portrait */
 @media (max-width: 768px) {
   .hero__container {
-    padding-top: calc(var(--space-20) + var(--space-10));
+    padding-top: 12vh;
     gap: var(--space-8);
+  }
+
+  .hero__heading-block {
+    max-width: 100%;
   }
 
   .hero__heading {
     font-size: clamp(1.75rem, 4vw, 2.75rem);
     letter-spacing: -0.01em;
+  }
+
+  .hero__canvas-wrapper {
+    height: 65vh;
+    margin-top: -15vh;
   }
 
   .hero__mockup-wrapper {
@@ -279,14 +354,21 @@
   }
 }
 
+/* 640px and below: phones */
 @media (max-width: 640px) {
   .hero__container {
     padding-inline: var(--container-padding-sm);
-    padding-top: calc(var(--space-16) + var(--space-10));
+    padding-top: 10vh;
+    gap: var(--space-6);
   }
 
   .hero__heading {
     font-size: clamp(1.5rem, 6vw, 2rem);
+  }
+
+  .hero__canvas-wrapper {
+    height: 60vh;
+    margin-top: -12vh;
   }
 
   .hero__actions {
