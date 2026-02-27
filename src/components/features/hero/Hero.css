@@ -354,31 +354,29 @@
   4. Canvas / monitor                    — fills remaining space at bottom
 */
 @media (max-width: 640px) {
-  /* Natural height — content stays in dark gradient zone */
+  /* Full screen height */
   .hero {
-    height: auto;
+    height: 100dvh;
   }
 
   .hero__sticky {
     position: relative;
-    height: auto;
+    height: 100dvh;
   }
 
   /*
-    8pt system:
-    padding-top: 96px (var(--space-24)) — clears navbar + breathing room
-    padding-bottom: 80px (var(--space-20))
-    gap: 32px (var(--space-8)) — consistent rhythm between blocks
+    space-between distributes blocks evenly across the full screen.
+    padding-top clears navbar, padding-bottom gives bottom breathing room.
   */
   .hero__container {
     padding-inline: var(--container-padding-sm);
     padding-top: var(--space-24);
-    padding-bottom: var(--space-20);
-    gap: var(--space-8);
-    overflow: visible;
-    justify-content: flex-start;
+    padding-bottom: var(--space-12);
+    gap: 0;
+    overflow: hidden;
+    justify-content: space-between;
     align-items: center;
-    flex: none;
+    flex: 1;
   }
 
   /* Hide desktop heading */
