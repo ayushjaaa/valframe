@@ -21,7 +21,8 @@ function Hero({
   secondaryCta = 'View Work',
   onPrimaryClick,
   onSecondaryClick,
-  descriptionText = 'I craft experience-driven digital products that connect brands with people — clean, purposeful, and built to last.',
+  descriptionLeft = 'Web Design & Development\nIndia 🌐 Worldwide',
+  descriptionRight = 'Digital Studio +\nValframe Solution',
 }) {
   const pillRef     = useRef(null)
   const canvasRef   = useRef(null)   // set via MonitorCanvas callback ref
@@ -65,12 +66,20 @@ function Hero({
 
       <div className="hero__container">
 
-        {/* ── Heading Block ─────────────────────────────── */}
+        {/* ── Heading Block — desktop ────────────────────── */}
         <div className="hero__heading-block">
           <h1 className="hero__heading">
             <span className="hero__line">Hi! we're <span className="hero__highlight--blue">Valframe</span></span>
             <span className="hero__line">a <span className="hero__pill--blue">Web Solution</span> from <span className="hero__highlight--white">India</span></span>
             <span className="hero__line">turning your ideas into</span>
+          </h1>
+        </div>
+
+        {/* ── Heading Block — mobile only ─────────────────── */}
+        <div className="hero__heading-block--mobile">
+          <h1 className="hero__heading--mobile">
+            <span className="hero__line">We Build</span>
+            <span className="hero__line hero__line--accent">Web Solutions</span>
           </h1>
         </div>
 
@@ -96,9 +105,10 @@ function Hero({
         </div>
 
         {/* ── Bottom Description ────────────────────────── */}
-        <p className="hero__description">
-          {descriptionText}
-        </p>
+        <div className="hero__description">
+          <span className="hero__description-col">{descriptionLeft}</span>
+          <span className="hero__description-col">{descriptionRight}</span>
+        </div>
 
       </div>
 

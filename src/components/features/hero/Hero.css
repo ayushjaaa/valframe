@@ -38,9 +38,9 @@
     linear-gradient(
       to bottom,
       #0A090B 0%,
-      #0A090B 30%,
-      #3d3d3d 55%,
-      #979796 75%,
+      #0A090B 50%,
+      #3d3d3d 72%,
+      #979796 88%,
       #979796 100%
     );
   display: flex;
@@ -49,11 +49,6 @@
 
 
 /* ── Container ────────────────────────────────────────────── */
-/*
-   Your screen (1470×956px):
-   padding-top target = ~144px above content = 15.1vh
-   We use 15vh as the reference — scales identically on all screens.
-*/
 .hero__container {
   position: relative;
   width: 100%;
@@ -72,19 +67,13 @@
 
 /* ── Heading Block ────────────────────────────────────────── */
 .hero__heading-block {
-  max-width: 62.5vw;   /* 920px ÷ 1470px = 62.6% — scales with viewport */
+  max-width: 62.5vw;
   text-align: center;
   align-self: center;
 }
 
 .hero__heading {
   font-family: var(--font-suisse);
-  /*
-    Your screen 1470px: 4.5vw = 66px (design target ~60-64px)
-    11" at 1366px: 4.5vw = 61px — proportionally correct
-    12" at 1280px: 4.5vw = 58px — proportionally correct
-    clamp floor (2rem) only kicks in below ~445px wide
-  */
   font-size: clamp(2rem, 4.5vw, 4.5rem);
   font-weight: var(--wt-regular);
   line-height: var(--lh-snug);
@@ -185,7 +174,7 @@
 }
 
 
-/* ── Monitor Mockup (static image fallback — not the 3D canvas) ── */
+/* ── Monitor Mockup (static image fallback) ───────────────── */
 .hero__mockup-wrapper {
   width: 80%;
   max-width: 900px;
@@ -247,18 +236,6 @@
 
 
 /* ── Canvas Wrapper ───────────────────────────────────────── */
-/*
-   Reference (your 1470×956px screen):
-   - Canvas height target: 70vh → keeps on all screens
-   - margin-top target: -180px ÷ 956px = -18.8vh → use -19vh
-
-   This means on EVERY screen:
-   - 11" (1366×768):  -19vh = -146px, height = 70vh = 538px
-   - 12" (1280×800):  -19vh = -152px, height = 70vh = 560px
-   - 14" (1440×900):  -19vh = -171px, height = 70vh = 630px
-   - Your screen:     -19vh = -182px, height = 70vh = 669px
-   Proportionally identical across all screens.
-*/
 .hero__canvas-wrapper {
   position: relative;
   width: 100%;
@@ -269,11 +246,6 @@
 
 
 /* ── Bottom Right Description ─────────────────────────────── */
-/*
-   bottom: 48px ÷ 956px = 5vh on your screen — use 5vh.
-   This keeps it exactly at the same proportional position on all screens.
-   Only collapses to static below 1280px where layout is too narrow.
-*/
 .hero__description {
   position: absolute;
   bottom: 5vh;
@@ -290,12 +262,6 @@
 
 /* ── Responsive ───────────────────────────────────────────── */
 
-/*
-   1280px: 11"–12" laptops (1280×800, 1366×768)
-   All vh-based values stay identical — no canvas changes needed.
-   Only the description collapses to static because the viewport
-   is now narrow enough that absolute positioning risks overlap.
-*/
 @media (max-width: 1280px) {
   .hero__heading-block {
     max-width: 72vw;
@@ -309,7 +275,6 @@
   }
 }
 
-/* 1024px and below: tablets and small laptops */
 @media (max-width: 1024px) {
   .hero__heading-block {
     max-width: 85vw;
@@ -327,7 +292,6 @@
   }
 }
 
-/* 768px and below: tablets in portrait */
 @media (max-width: 768px) {
   .hero__container {
     padding-top: 12vh;
@@ -354,14 +318,46 @@
   }
 }
 
-/* 640px and below: phones */
+
+/* ── Mobile-only heading — hidden on desktop ──────────────── */
+.hero__heading-block--mobile {
+  display: none;
+}
+
+.hero__heading--mobile {
+  font-family: var(--font-gravity-condensed);
+  font-size: clamp(3rem, 14vw, 4.5rem);
+  font-weight: var(--wt-black);
+  line-height: var(--lh-tight);
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--color-text-primary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+
+.hero__line--accent {
+  color: var(--color-text-secondary);
+  font-style: italic;
+}
+
+
+/* ── 640px and below: phones ──────────────────────────────── */
+/*
+  Mobile layout order (top → bottom):
+  1. Heading "WE BUILD / Web Solutions"  — centered
+  2. Two-column description strip        — centered
+  3. PLAY SHOWREEL pill                  — centered
+  4. Canvas / monitor                    — fills remaining space at bottom
+*/
 @media (max-width: 640px) {
-  /* No scroll animation — collapse the 200vh section to a single viewport */
   .hero {
     height: 100dvh;
   }
 
-  /* Sticky is still needed for layout but no longer scrolls */
   .hero__sticky {
     position: relative;
     height: 100dvh;
@@ -369,51 +365,76 @@
 
   .hero__container {
     padding-inline: var(--container-padding-sm);
-    padding-top: 18vw;   /* ~70px on 390px phone, feels natural below navbar */
-    gap: var(--space-4);
-    overflow: visible;
-  }
-
-  .hero__heading {
-    font-size: clamp(1.6rem, 7.5vw, 2.2rem);
-    line-height: 1.18;
-    letter-spacing: -0.02em;
-  }
-
-  /* Canvas: no scroll-scale animation runs, prog locked at 1 (face-on) */
-  .hero__canvas-wrapper {
-    height: 38vh;
-    margin-top: -4vh;
+    padding-top: 0;
+    padding-bottom: 0;
+    gap: var(--space-5);
     overflow: hidden;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
   }
 
-  /* Buttons side by side — hero feel, not form feel */
+  /* Hide desktop heading */
+  .hero__heading-block {
+    display: none;
+  }
+
+  /* Show mobile heading — 2 lines, centered */
+  .hero__heading-block--mobile {
+    display: block;
+    width: 100%;
+    text-align: center;
+  }
+
+  /* Larger display size — fills width confidently */
+  .hero__heading--mobile {
+    font-size: clamp(2.6rem, 13vw, 4rem);
+  }
+
+  /* Two-column info strip */
+  .hero__description {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-3);
+    position: static;
+    width: 100%;
+    text-align: center;
+    font-family: var(--font-suisse);
+    font-size: clamp(0.58rem, 2.5vw, 0.7rem);
+    color: var(--color-text-muted);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    line-height: 1.6;
+  }
+
+  .hero__description-col {
+    white-space: pre-line;
+  }
+
+  /* Show CTA buttons on mobile */
   .hero__actions {
+    display: flex;
     flex-direction: row;
-    align-items: center;
-    justify-content: center;
     flex-wrap: nowrap;
     gap: var(--space-3);
+    width: 100%;
+    justify-content: center;
   }
 
   .hero__btn {
     flex: 1;
-    max-width: 164px;
+    max-width: 160px;
     justify-content: center;
-    padding: var(--space-2) var(--space-4);
+    padding: var(--space-3) var(--space-4);
   }
 
-  /* Description hidden — viewport too small, content competes with heading */
-  .hero__description {
-    display: none;
-  }
-
-  /* Pill cursor hover is meaningless on touch */
+  /* Hide pill on mobile */
   .hero__showreel-pill {
     display: none;
   }
 
-  .hero__mockup-wrapper {
-    transform: rotate(-1.5deg);
+  /* Hide canvas entirely on mobile */
+  .hero__canvas-wrapper {
+    display: none;
   }
 }
