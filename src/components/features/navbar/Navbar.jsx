@@ -23,6 +23,7 @@ function Navbar({ logo = 'Valframe', links = [], ctaLabel = 'Contact Us', onCtaC
 
         <div className="navbar__cta">
           <button className="navbar__btn" onClick={onCtaClick}>
+            <span className="navbar__btn-dot" aria-hidden="true" />
             {ctaLabel}
           </button>
         </div>
