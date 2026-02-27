@@ -38,13 +38,13 @@ function fillQuad(ctx, a, b, c, d, style) {
 }
 
 // ─── Draw the monitor into a canvas context ───────────────────────────────
-function drawMonitor(canvas, ctx, dpr, prog) {
+function drawMonitor(canvas, ctx, dpr, prog, video) {
   const W = canvas.width  / dpr
   const H = canvas.height / dpr
   ctx.clearRect(0, 0, W, H)
 
-  const monW  = W  * 0.84
-  const monH  = H  * 0.62
+  const monW  = W  * 0.68
+  const monH  = H  * 0.74
   const monD  = W  * 0.052
   const bezel = monH * 0.044
   const hd    = monD / 2
@@ -145,134 +145,89 @@ function drawMonitor(canvas, ctx, dpr, prog) {
   const sbr = Pt( hw - bezel,  hh - bezel, -hd)
   const sbl = Pt(-hw + bezel,  hh - bezel, -hd)
 
-  const scrW = 1440
-  const scrH = 900
-
-  const SC = (sx, sy) => {
-    const wx = -hw + bezel + (sx / scrW) * (monW - bezel * 2)
-    const wy = -hh + bezel + (sy / scrH) * (monH - bezel * 2)
-    return Pt(wx, wy, -hd)
-  }
-
-  const SR = (sx, sy, sw, sh, color) => {
-    const a = SC(sx, sy); const b = SC(sx + sw, sy)
-    const c = SC(sx + sw, sy + sh); const d = SC(sx, sy + sh)
-    pathQuad(ctx, a, b, c, d); ctx.fillStyle = color; ctx.fill()
-  }
-
-  const SRS = (sx, sy, sw, sh, color, lw) => {
-    const a = SC(sx, sy); const b = SC(sx + sw, sy)
-    const c = SC(sx + sw, sy + sh); const d = SC(sx, sy + sh)
-    pathQuad(ctx, a, b, c, d); ctx.strokeStyle = color; ctx.lineWidth = lw; ctx.stroke()
-  }
-
-  const SHL = (x1, y, x2, color, lw) => {
-    const p1 = SC(x1, y); const p2 = SC(x2, y)
-    ctx.beginPath(); ctx.moveTo(p1.x, p1.y); ctx.lineTo(p2.x, p2.y)
-    ctx.strokeStyle = color; ctx.lineWidth = lw; ctx.stroke()
-  }
-
-  const SVL = (x, y1, y2, color, lw) => {
-    const p1 = SC(x, y1); const p2 = SC(x, y2)
-    ctx.beginPath(); ctx.moveTo(p1.x, p1.y); ctx.lineTo(p2.x, p2.y)
-    ctx.strokeStyle = color; ctx.lineWidth = lw; ctx.stroke()
-  }
-
+  // ── Screen fill — video if ready, dark fallback otherwise ──────────────
   fillQuad(ctx, stl, str, sbr, sbl, '#0a090b')
-  for (let gx = 0; gx < scrW; gx += 120) SVL(gx, 0, scrH, 'rgba(255,255,255,0.018)', 0.5)
-  for (let gy = 0; gy < scrH; gy += 120) SHL(0, gy, scrW, 'rgba(255,255,255,0.018)', 0.5)
 
-  const NAV_H = 60
-  SR(0, 0, scrW, NAV_H, 'rgba(10,9,11,0.95)')
-  SHL(0, NAV_H, scrW, 'rgba(255,255,255,0.06)', 0.8)
-  SR(32, 18, 90, 24, 'rgba(255,255,255,0.90)')
-  ;[220, 320, 420, 540].forEach(nx => SR(nx, 22, 60, 16, 'rgba(255,255,255,0.22)'))
-  SR(scrW - 160, 16, 100, 28, 'rgba(80,100,240,0.85)')
-  SR(scrW - 44,  18,  24, 24, 'rgba(255,255,255,0.08)')
+  if (video && video.readyState >= 2) {
+    const vw = video.videoWidth  || 1280
+    const vh = video.videoHeight || 720
 
-  const HERO_TOP = NAV_H + 60
-  SR(60, HERO_TOP - 36, 160, 22, 'rgba(80,100,240,0.30)')
-  SRS(60, HERO_TOP - 36, 160, 22, 'rgba(80,100,240,0.55)', 0.8)
-  SR(70, HERO_TOP - 32, 100, 14, 'rgba(180,190,255,0.50)')
-  SR(60, HERO_TOP,       760, 72, 'rgba(255,255,255,0.92)')
-  SR(60, HERO_TOP + 90,  560, 72, 'rgba(255,255,255,0.92)')
-  SR(60, HERO_TOP + 180, 380, 72, 'rgba(255,255,255,0.92)')
-  SR(60, HERO_TOP + 278, 420, 12, 'rgba(255,255,255,0.30)')
-  SR(60, HERO_TOP + 298, 380, 12, 'rgba(255,255,255,0.20)')
-  SR(60, HERO_TOP + 318, 340, 12, 'rgba(255,255,255,0.14)')
-  SR(60,  HERO_TOP + 350, 160, 44, 'rgba(80,100,240,0.90)')
-  SRS(240, HERO_TOP + 350, 140, 44, 'rgba(255,255,255,0.28)', 1)
+    // Perspective-correct mapping via affine triangle subdivision.
+    // STEPS=6 → 72 triangles per frame, fast enough for smooth 60fps RAF.
+    const STEPS = 6
 
-  SR(880, HERO_TOP - 10, 480, 380, 'rgba(255,255,255,0.04)')
-  SRS(880, HERO_TOP - 10, 480, 380, 'rgba(255,255,255,0.10)', 0.8)
-  {
-    const bc = SC(1120, HERO_TOP + 180)
-    const be = SC(1120 + 150, HERO_TOP + 180)
-    const br = Math.abs(be.x - bc.x)
-    if (br > 0) {
-      const bg = ctx.createRadialGradient(bc.x, bc.y, 0, bc.x, bc.y, br * 1.4)
-      bg.addColorStop(0,   'rgba(100,120,255,0.35)')
-      bg.addColorStop(0.4, 'rgba(80,60,200,0.18)')
-      bg.addColorStop(0.8, 'rgba(60,40,150,0.06)')
-      bg.addColorStop(1,   'rgba(0,0,0,0)')
-      ctx.fillStyle = bg
-      ctx.beginPath(); ctx.arc(bc.x, bc.y, br * 1.5, 0, Math.PI * 2); ctx.fill()
+    // Pre-compute all grid points once outside the triangle loop
+    const pts = []
+    for (let row = 0; row <= STEPS; row++) {
+      pts[row] = []
+      for (let col = 0; col <= STEPS; col++) {
+        const tr_ = row / STEPS
+        const tc_ = col / STEPS
+        const tx = stl.x + (str.x - stl.x) * tc_
+        const ty = stl.y + (str.y - stl.y) * tc_
+        const bx = sbl.x + (sbr.x - sbl.x) * tc_
+        const by = sbl.y + (sbr.y - sbl.y) * tc_
+        pts[row][col] = {
+          x: tx + (bx - tx) * tr_,
+          y: ty + (by - ty) * tr_,
+          u: tc_ * vw,
+          v: tr_ * vh,
+        }
+      }
     }
+
+    // Capture current DPR transform so setTransform can restore it per triangle
+    const dprScale = dpr
+
+    ctx.save()
+    pathQuad(ctx, stl, str, sbr, sbl)
+    ctx.clip()
+
+    for (let row = 0; row < STEPS; row++) {
+      for (let col = 0; col < STEPS; col++) {
+        const p00 = pts[row    ][col    ]
+        const p10 = pts[row    ][col + 1]
+        const p01 = pts[row + 1][col    ]
+        const p11 = pts[row + 1][col + 1]
+
+        // Draw one triangle: p0, p1, p2
+        // Uses setTransform (absolute) so DPR base transform is not compounded
+        function drawTri(p0, p1, p2) {
+          const det = (p1.u - p0.u) * (p2.v - p0.v) - (p2.u - p0.u) * (p1.v - p0.v)
+          if (Math.abs(det) < 0.001) return
+          const a = ((p1.x - p0.x) * (p2.v - p0.v) - (p2.x - p0.x) * (p1.v - p0.v)) / det
+          const b = ((p1.y - p0.y) * (p2.v - p0.v) - (p2.y - p0.y) * (p1.v - p0.v)) / det
+          const c = ((p2.x - p0.x) * (p1.u - p0.u) - (p1.x - p0.x) * (p2.u - p0.u)) / det
+          const d = ((p2.y - p0.y) * (p1.u - p0.u) - (p1.y - p0.y) * (p2.u - p0.u)) / det
+          const e = p0.x - a * p0.u - c * p0.v
+          const f = p0.y - b * p0.u - d * p0.v
+
+          ctx.save()
+          ctx.beginPath()
+          ctx.moveTo(p0.x, p0.y)
+          ctx.lineTo(p1.x, p1.y)
+          ctx.lineTo(p2.x, p2.y)
+          ctx.closePath()
+          ctx.clip()
+          // setTransform is absolute — replaces the current matrix entirely
+          ctx.setTransform(a * dprScale, b * dprScale, c * dprScale, d * dprScale, e * dprScale, f * dprScale)
+          ctx.drawImage(video, 0, 0, vw, vh)
+          ctx.restore()
+        }
+
+        drawTri(p00, p10, p01)
+        drawTri(p10, p11, p01)
+      }
+    }
+
+    ctx.restore()
   }
-  SR(900, HERO_TOP + 20, 200, 14, 'rgba(255,255,255,0.18)')
-  SR(900, HERO_TOP + 42, 140, 10, 'rgba(255,255,255,0.10)')
-  SR(1280, HERO_TOP + 20, 60, 60, 'rgba(255,255,255,0.06)')
-  SRS(1280, HERO_TOP + 20, 60, 60, 'rgba(255,255,255,0.20)', 0.8)
-  ;[0, 130, 260].forEach(tx => {
-    SR(900 + tx, HERO_TOP + 290, 110, 28, 'rgba(255,255,255,0.06)')
-    SRS(900 + tx, HERO_TOP + 290, 110, 28, 'rgba(255,255,255,0.15)', 0.7)
-  })
 
-  const MQ_Y = HERO_TOP + 430
-  SR(0, MQ_Y, scrW, 44, 'rgba(255,255,255,0.03)')
-  SHL(0, MQ_Y, scrW, 'rgba(255,255,255,0.06)', 0.7)
-  SHL(0, MQ_Y + 44, scrW, 'rgba(255,255,255,0.06)', 0.7)
-  ;[0, 260, 520, 780, 1040, 1300].forEach(tx => {
-    SR(tx + 30, MQ_Y + 14, 180, 16, 'rgba(255,255,255,0.16)')
-    SR(tx + 222, MQ_Y + 18, 8, 8, 'rgba(255,255,255,0.30)')
-  })
-
-  const GRID_TOP = MQ_Y + 60
-  const CARD_W   = 660
-  const CARD_H   = 200
-  ;[[60, GRID_TOP], [740, GRID_TOP]].forEach(([cx, cy]) => {
-    SR(cx, cy, CARD_W, CARD_H, 'rgba(255,255,255,0.04)')
-    SRS(cx, cy, CARD_W, CARD_H, 'rgba(255,255,255,0.10)', 0.7)
-    SR(cx + 12, cy + 12, CARD_W - 24, CARD_H * 0.55, 'rgba(255,255,255,0.06)')
-    SR(cx + 12, cy + CARD_H * 0.65,      CARD_W * 0.55, 14, 'rgba(255,255,255,0.60)')
-    SR(cx + 12, cy + CARD_H * 0.65 + 22, CARD_W * 0.35, 10, 'rgba(255,255,255,0.22)')
-    SR(cx + CARD_W - 80, cy + CARD_H - 32, 68, 20, 'rgba(80,100,240,0.30)')
-    SRS(cx + CARD_W - 80, cy + CARD_H - 32, 68, 20, 'rgba(80,100,240,0.55)', 0.7)
-  })
-
-  const FOOT_Y = scrH - 52
-  SHL(0, FOOT_Y, scrW, 'rgba(255,255,255,0.06)', 0.7)
-  SR(60, FOOT_Y + 14, 100, 12, 'rgba(255,255,255,0.40)')
-  SR(60, FOOT_Y + 32, 220, 10, 'rgba(255,255,255,0.14)')
-  SR(scrW - 200, FOOT_Y + 14, 40, 12, 'rgba(255,255,255,0.18)')
-  SR(scrW - 148, FOOT_Y + 14, 40, 12, 'rgba(255,255,255,0.18)')
-  SR(scrW - 96,  FOOT_Y + 14, 40, 12, 'rgba(255,255,255,0.18)')
-
-  SVL(56, NAV_H, FOOT_Y, 'rgba(255,255,255,0.04)', 0.7)
-  ;[[56, NAV_H], [56, FOOT_Y], [scrW - 56, NAV_H], [scrW - 56, FOOT_Y]].forEach(([px, py]) => {
-    const arm = 8
-    const lx = SC(px - arm, py); const rx = SC(px + arm, py)
-    const ty = SC(px, py - arm); const by = SC(px, py + arm)
-    ctx.strokeStyle = 'rgba(255,255,255,0.24)'; ctx.lineWidth = 0.8
-    ctx.beginPath(); ctx.moveTo(lx.x, lx.y); ctx.lineTo(rx.x, rx.y); ctx.stroke()
-    ctx.beginPath(); ctx.moveTo(ty.x, ty.y); ctx.lineTo(by.x, by.y); ctx.stroke()
-  })
-
+  // Screen glare overlay
   {
-    const g1 = SC(0, 0); const g2 = SC(scrW * 0.5, scrH * 0.4)
-    const gg = ctx.createLinearGradient(g1.x, g1.y, g2.x, g2.y)
-    gg.addColorStop(0,   'rgba(255,255,255,0.07)')
-    gg.addColorStop(0.5, 'rgba(255,255,255,0.02)')
+    const gg = ctx.createLinearGradient(stl.x, stl.y, sbr.x, sbr.y)
+    gg.addColorStop(0,   'rgba(255,255,255,0.06)')
+    gg.addColorStop(0.5, 'rgba(255,255,255,0.01)')
     gg.addColorStop(1,   'rgba(255,255,255,0.00)')
     ctx.fillStyle = gg; pathQuad(ctx, stl, str, sbr, sbl); ctx.fill()
   }
@@ -412,18 +367,44 @@ function drawMonitor(canvas, ctx, dpr, prog) {
   ctx.globalAlpha = 1
 }
 
+// ─── Exported helper: screen quad corners for hit-testing ─────────────────
+export function getScreenQuad(W, H, prog) {
+  const monW  = W  * 0.68
+  const monH  = H  * 0.74
+  const monD  = W  * 0.052
+  const bezel = monH * 0.044
+  const hd    = monD / 2
+  const hw    = monW / 2
+  const hh    = monH / 2
+  const Pt    = (x, y, z) => project(x, y, z, W, H, prog)
+  return {
+    tl: Pt(-hw + bezel, -hh + bezel, -hd),
+    tr: Pt( hw - bezel, -hh + bezel, -hd),
+    br: Pt( hw - bezel,  hh - bezel, -hd),
+    bl: Pt(-hw + bezel,  hh - bezel, -hd),
+  }
+}
+
 // ─── Component ────────────────────────────────────────────────────────────
-function MonitorCanvas() {
+function MonitorCanvas({ canvasElRef, onScrollProgress }) {
   const canvasRef = useRef(null)
   const dprRef    = useRef(window.devicePixelRatio || 1)
   const ctxRef    = useRef(null)
+  const videoRef  = useRef(null)
+  const progRef   = useRef(0)
+  const rafRef    = useRef(null)
 
   // Called on every scroll event by the hook
   const onProgress = (rawProg) => {
-    const canvas = canvasRef.current
-    const ctx    = ctxRef.current
-    if (!canvas || !ctx) return
-    drawMonitor(canvas, ctx, dprRef.current, rawProg)
+    progRef.current = rawProg
+    if (onScrollProgress) onScrollProgress(rawProg)
+    // If video is ready, the RAF loop handles drawing; otherwise draw static
+    if (!videoRef.current || videoRef.current.readyState < 2) {
+      const canvas = canvasRef.current
+      const ctx    = ctxRef.current
+      if (!canvas || !ctx) return
+      drawMonitor(canvas, ctx, dprRef.current, rawProg)
+    }
   }
 
   useMonitorScroll(canvasRef, onProgress)
@@ -434,6 +415,15 @@ function MonitorCanvas() {
     const ctx = canvas.getContext('2d')
     ctxRef.current = ctx
 
+    // Create video element
+    const video = document.createElement('video')
+    video.src = new URL('../../../assets/videos/showreel.mp4', import.meta.url).href
+    video.muted = true
+    video.loop  = true
+    video.playsInline = true
+    video.autoplay = true
+    videoRef.current = video
+
     function resize() {
       dprRef.current = window.devicePixelRatio || 1
       const dpr  = dprRef.current
@@ -443,20 +433,33 @@ function MonitorCanvas() {
       canvas.style.width  = rect.width  + 'px'
       canvas.style.height = rect.height + 'px'
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
-      // Draw at current scroll progress
-      const maxScroll = window.innerHeight * 0.65
-      const prog = Math.min(window.scrollY / maxScroll, 1)
-      drawMonitor(canvas, ctx, dpr, prog)
+      drawMonitor(canvas, ctx, dprRef.current, progRef.current, video)
     }
 
-    resize()
+    // RAF loop — always running so video plays smoothly on every loop iteration
+    function loop() {
+      drawMonitor(canvas, ctx, dprRef.current, progRef.current, video)
+      rafRef.current = requestAnimationFrame(loop)
+    }
+
+    video.addEventListener('canplay', () => {
+      video.play().catch(() => {})
+      if (!rafRef.current) loop()
+    })
+
+    resize()  // sets canvas size + initial draw
+    loop()    // starts continuous RAF for video playback
     window.addEventListener('resize', resize)
-    return () => window.removeEventListener('resize', resize)
+    return () => {
+      window.removeEventListener('resize', resize)
+      if (rafRef.current) cancelAnimationFrame(rafRef.current)
+      video.pause()
+    }
   }, [])
 
   return (
     <canvas
-      ref={canvasRef}
+      ref={(node) => { canvasRef.current = node; if (canvasElRef) canvasElRef.current = node }}
       className="monitor-canvas"
       aria-label="Valframe project preview"
     />

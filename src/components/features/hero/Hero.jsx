@@ -1,5 +1,20 @@
-import MonitorCanvas from './MonitorCanvas'
+import { useRef, useCallback } from 'react'
+import MonitorCanvas, { getScreenQuad } from './MonitorCanvas'
 import './Hero.css'
+
+// Point-in-convex-quad test using cross products (works for any convex quad)
+function pointInQuad(px, py, tl, tr, br, bl) {
+  function cross(ax, ay, bx, by, cx, cy) {
+    return (bx - ax) * (cy - ay) - (by - ay) * (cx - ax)
+  }
+  const d0 = cross(tl.x, tl.y, tr.x, tr.y, px, py)
+  const d1 = cross(tr.x, tr.y, br.x, br.y, px, py)
+  const d2 = cross(br.x, br.y, bl.x, bl.y, px, py)
+  const d3 = cross(bl.x, bl.y, tl.x, tl.y, px, py)
+  const hasNeg = (d0 < 0) || (d1 < 0) || (d2 < 0) || (d3 < 0)
+  const hasPos = (d0 > 0) || (d1 > 0) || (d2 > 0) || (d3 > 0)
+  return !(hasNeg && hasPos)
+}
 
 function Hero({
   primaryCta = 'Start a Project',
@@ -8,8 +23,45 @@ function Hero({
   onSecondaryClick,
   descriptionText = 'I craft experience-driven digital products that connect brands with people — clean, purposeful, and built to last.',
 }) {
+  const pillRef     = useRef(null)
+  const canvasRef   = useRef(null)   // set via MonitorCanvas callback ref
+  const progRef     = useRef(0)      // mirrors scroll progress
+
+  const handleMouseMove = useCallback((e) => {
+    const pill   = pillRef.current
+    const canvas = canvasRef.current
+    if (!pill) return
+
+    const rect = e.currentTarget.getBoundingClientRect()
+    const x = e.clientX - rect.left
+    const y = e.clientY - rect.top
+
+    // Always move pill to cursor
+    pill.style.left      = x + 'px'
+    pill.style.top       = y + 'px'
+    pill.style.transform = 'translate(-50%, -50%)'
+
+    // Check if cursor is inside the monitor screen quad
+    if (canvas) {
+      const W    = canvas.offsetWidth
+      const H    = canvas.offsetHeight
+      const quad = getScreenQuad(W, H, progRef.current)
+      const inside = pointInQuad(x, y, quad.tl, quad.tr, quad.br, quad.bl)
+      pill.classList.toggle('hero__showreel-pill--visible', inside)
+    }
+  }, [])
+
+  const handleMouseLeave = useCallback(() => {
+    if (pillRef.current) pillRef.current.classList.remove('hero__showreel-pill--visible')
+  }, [])
+
+  const handleProgress = useCallback((p) => {
+    progRef.current = p
+  }, [])
+
   return (
     <section className="hero" data-section="dark">
+      <div className="hero__sticky">
 
       <div className="hero__container">
 
@@ -34,12 +86,13 @@ function Hero({
         </div>
 
         {/* ── Canvas Monitor ────────────────────────────── */}
-        <div className="hero__canvas-wrapper">
-          <div className="hero__showreel-pill" aria-hidden="true">
+        <div className="hero__canvas-wrapper" onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave}>
+          <MonitorCanvas canvasElRef={canvasRef} onScrollProgress={handleProgress} />
+          {/* ── Play Showreel Pill — follows cursor ───── */}
+          <div ref={pillRef} className="hero__showreel-pill" aria-hidden="true">
             <span className="hero__showreel-dot" />
             PLAY SHOWREEL
           </div>
-          <MonitorCanvas />
         </div>
 
         {/* ── Bottom Description ────────────────────────── */}
@@ -49,6 +102,7 @@ function Hero({
 
       </div>
 
+      </div>
     </section>
   )
 }
