@@ -1,0 +1,126 @@
+.work {
+  width: 100%;
+}
+
+.work__inner {
+  max-width: 1400px;
+  margin-inline: auto;
+  padding-inline: 6%;
+}
+
+/* ── Dark Hero Panel ─────────────────────────────────────── */
+.work__hero-panel {
+  background-color: #0A090B;
+  padding-top: 120px;
+  padding-bottom: var(--space-20);
+}
+
+.work__eyebrow {
+  font-family: var(--font-suisse);
+  font-size: var(--suisse-label-primary-fs);
+  font-weight: var(--suisse-label-primary-wt);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin: 0 0 var(--space-4) 0;
+}
+
+.work__headline {
+  font-family: var(--font-suisse);
+  font-size: clamp(32px, 4vw, 60px);
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--color-text-primary);
+  margin: 0;
+  letter-spacing: -1px;
+  max-width: 700px;
+}
+
+/* ── Projects Panel ──────────────────────────────────────── */
+.work__projects-panel {
+  background-color: var(--color-neutral-50);
+  border-top: 1px solid var(--color-neutral-200);
+  padding-top: var(--space-16);
+  padding-bottom: var(--space-24);
+}
+
+/* ── Grid ────────────────────────────────────────────────── */
+.work__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: auto auto;
+  gap: var(--space-5);
+}
+
+/* Featured card — tall, spans 2 rows */
+.work__card--featured {
+  grid-row: span 2;
+}
+
+/* Wide card — spans 2 columns */
+.work__card--wide {
+  grid-column: span 2;
+}
+
+/* ── Card ────────────────────────────────────────────────── */
+.work__card {
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  border: 1px solid var(--color-neutral-200);
+  background-color: var(--color-neutral-100);
+}
+
+.work__card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform var(--duration-medium) var(--ease-default);
+}
+
+.work__card:hover img {
+  transform: scale(1.03);
+}
+
+/* ── Responsive ──────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .work__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .work__card--featured {
+    grid-row: span 1;
+  }
+
+  .work__card--wide {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 768px) {
+  .work__hero-panel {
+    padding-top: 100px;
+    padding-bottom: var(--space-16);
+  }
+
+  .work__inner {
+    padding-inline: 5%;
+  }
+
+  .work__grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+
+  .work__card--featured {
+    grid-row: span 1;
+  }
+
+  .work__card--wide {
+    grid-column: span 1;
+  }
+
+  .work__card img {
+    height: 260px;
+  }
+}

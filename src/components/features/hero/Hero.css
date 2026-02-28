@@ -99,7 +99,7 @@
   display: inline-flex;
   align-items: center;
   background-color: var(--color-info);
-  color: #ffffff;
+  color: var(--color-text-primary);
   border-radius: var(--radius-full);
   padding-inline: var(--space-5);
   padding-block: var(--space-1);
@@ -199,8 +199,8 @@
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
-  background: #1e1c2e;
-  color: rgba(255, 255, 255, 0.82);
+  background: var(--color-accent-pill-bg);
+  color: var(--color-accent-pill-text);
   font-family: var(--font-suisse);
   font-size: var(--suisse-caption-primary-fs);
   font-weight: var(--suisse-label-primary-wt);
@@ -226,7 +226,7 @@
   width: 8px;
   height: 8px;
   border-radius: var(--radius-full);
-  background: #ff5533;
+  background: var(--color-accent-dot);
   flex-shrink: 0;
 }
 

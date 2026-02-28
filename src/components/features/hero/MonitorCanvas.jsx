@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useCallback } from 'react'
 import useMonitorScroll from '../../../hooks/useMonitorScroll'
 import './MonitorCanvas.css'
 
@@ -394,18 +394,19 @@ function MonitorCanvas({ canvasElRef, onScrollProgress }) {
   const progRef   = useRef(0)
   const rafRef    = useRef(null)
 
-  // Called on every scroll event by the hook
-  const onProgress = (rawProg) => {
+  // Stable callback ref — prevents useMonitorScroll from re-running its effect
+  // on every render (which repeatedly adds/removes the scroll listener mid-scroll).
+  // progRef is written here so the RAF loop always reads the latest value.
+  const onProgress = useCallback((rawProg) => {
     progRef.current = rawProg
     if (onScrollProgress) onScrollProgress(rawProg)
-    // If video is ready, the RAF loop handles drawing; otherwise draw static
-    if (!videoRef.current || videoRef.current.readyState < 2) {
+    // When no RAF loop is running (video not ready), draw once per scroll tick
+    if (!rafRef.current) {
       const canvas = canvasRef.current
       const ctx    = ctxRef.current
-      if (!canvas || !ctx) return
-      drawMonitor(canvas, ctx, dprRef.current, rawProg)
+      if (canvas && ctx) drawMonitor(canvas, ctx, dprRef.current, rawProg)
     }
-  }
+  }, [onScrollProgress])
 
   useMonitorScroll(canvasRef, onProgress)
 
@@ -436,19 +437,24 @@ function MonitorCanvas({ canvasElRef, onScrollProgress }) {
       drawMonitor(canvas, ctx, dprRef.current, progRef.current, video)
     }
 
-    // RAF loop — always running so video plays smoothly on every loop iteration
+    // RAF loop — only runs while video is playing to avoid wasted frames.
+    // Started once on canplay and never duplicated (guard via rafRef).
     function loop() {
       drawMonitor(canvas, ctx, dprRef.current, progRef.current, video)
       rafRef.current = requestAnimationFrame(loop)
     }
 
+    function startLoop() {
+      if (rafRef.current) return   // already running — never start a second loop
+      loop()
+    }
+
     video.addEventListener('canplay', () => {
       video.play().catch(() => {})
-      if (!rafRef.current) loop()
+      startLoop()
     })
 
-    resize()  // sets canvas size + initial draw
-    loop()    // starts continuous RAF for video playback
+    resize()  // sets canvas size + initial static draw
     window.addEventListener('resize', resize)
     return () => {
       window.removeEventListener('resize', resize)

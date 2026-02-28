@@ -1,0 +1,192 @@
+/* ============================================================
+   SERVICES SECTION
+   Centered capsule stack — each pill animates in with a
+   staggered fade + slide-up on page load.
+   Hover expands the capsule and inverts to dark.
+   ============================================================ */
+
+/* ── Entrance keyframe ──────────────────────────────────────── */
+@keyframes capsule-enter {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Section — full-width gradient carrier ──────────────────── */
+.services {
+  background: linear-gradient(
+    to bottom,
+    var(--gradient-works-start) 0%,
+    var(--gradient-works-end)   18%
+  );
+  width: 100%;
+}
+
+/* ── Inner container ────────────────────────────────────────── */
+.services__inner {
+  max-width: var(--container-max-width);
+  margin-inline: auto;
+  padding-top: var(--space-16);
+  padding-bottom: var(--space-20);
+  padding-left: var(--container-padding);
+  padding-right: var(--container-padding);
+}
+
+/* ── Header ─────────────────────────────────────────────────── */
+.services__header {
+  margin-bottom: var(--space-10);
+}
+
+.services__title {
+  font-family: var(--font-gravity-compressed);
+  font-size: var(--gravity-display-secondary-fs);
+  font-weight: var(--gravity-display-secondary-wt);
+  line-height: var(--gravity-display-secondary-lh);
+  letter-spacing: var(--gravity-display-secondary-ls);
+  color: var(--color-text-inverse);
+}
+
+/* ── Capsule row — wrapping flex ────────────────────────────── */
+.services__list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-3);
+}
+
+/* ── Capsule ────────────────────────────────────────────────── */
+.service-capsule {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-4);
+  width: fit-content;
+  padding: var(--space-2) var(--space-5);
+  border-radius: var(--radius-full);
+  border: var(--border-default);
+  background-color: transparent;
+  cursor: pointer;
+
+  /* Staggered entrance — delay = index × 100ms */
+  animation: capsule-enter var(--duration-slow) var(--ease-out) both;
+  animation-delay: calc(var(--index) * 100ms);
+
+  /* Hover transitions */
+  transition:
+    background-color var(--duration-moderate) var(--ease-out),
+    border-color     var(--duration-moderate) var(--ease-out),
+    transform        var(--duration-moderate) var(--ease-spring);
+}
+
+.service-capsule:hover {
+  background-color: var(--color-text-inverse);
+  border-color: var(--color-text-inverse);
+  transform: translateY(-2px);
+}
+
+/* ── Title ──────────────────────────────────────────────────── */
+.service-capsule__title {
+  font-family: var(--font-suisse);
+  font-size: var(--suisse-label-primary-fs);
+  font-weight: var(--wt-medium);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--suisse-label-primary-ls);
+  color: var(--color-text-inverse);
+  white-space: nowrap;
+  transition: color var(--duration-moderate) var(--ease-out);
+}
+
+.service-capsule:hover .service-capsule__title {
+  color: var(--color-text-primary);
+}
+
+/* ── Footer CTA strip ───────────────────────────────────────── */
+.services__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-6);
+  margin-top: var(--space-12);
+  padding-top: var(--space-8);
+  border-top: var(--border-default);
+}
+
+.services__footer-text {
+  font-family: var(--font-suisse);
+  font-size: var(--suisse-heading-tertiary-fs);
+  font-weight: var(--wt-regular);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--suisse-heading-tertiary-ls);
+  color: var(--color-text-inverse);
+}
+
+.services__footer-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  background-color: var(--color-text-inverse);
+  color: var(--color-text-primary);
+  font-family: var(--font-suisse);
+  font-size: var(--suisse-label-primary-fs);
+  font-weight: var(--suisse-label-primary-wt);
+  letter-spacing: var(--suisse-label-primary-ls);
+  border-radius: var(--radius-full);
+  border: var(--border-sm) solid transparent;
+  padding: var(--space-3) var(--space-8);
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    background-color var(--duration-moderate) var(--ease-out),
+    transform        var(--duration-moderate) var(--ease-spring);
+}
+
+.services__footer-cta:hover {
+  background-color: var(--color-neutral-800);
+  transform: translateY(-2px);
+}
+
+.services__footer-arrow {
+  display: inline-flex;
+  font-size: 1.1em;
+  line-height: 1;
+  transition: transform var(--duration-moderate) var(--ease-spring);
+}
+
+.services__footer-cta:hover .services__footer-arrow {
+  transform: translateX(3px);
+}
+
+/* ── Responsive ─────────────────────────────────────────────── */
+
+@media (max-width: 640px) {
+  .services__inner {
+    padding-top: var(--space-12);
+    padding-bottom: var(--space-16);
+    padding-left: var(--container-padding-sm);
+    padding-right: var(--container-padding-sm);
+  }
+
+  .service-capsule {
+    max-width: 100%;
+    padding: var(--space-5) var(--space-6);
+  }
+
+  .service-capsule:hover {
+    max-width: 100%;
+  }
+
+  .services__footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .services__footer-text {
+    font-size: var(--suisse-body-primary-fs);
+  }
+}

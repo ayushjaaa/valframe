@@ -1,0 +1,291 @@
+/* ============================================================
+   TESTIMONIALS SECTION
+   Two stacked bands:
+   1. Dark heading block — label, display title, footnote
+   2. Light (#F9F9F9) marquee strip — infinite-scroll cards
+   ============================================================ */
+
+/* ── Section root ───────────────────────────────────────────── */
+.testimonials {
+  width: 100%;
+}
+
+/* ════════════════════════════════════════════════════════════
+   HEADING BLOCK — dark background
+   ════════════════════════════════════════════════════════════ */
+.testimonials__heading-block {
+  background-color: var(--color-background);
+  width: 100%;
+  padding-top: var(--space-20);
+  padding-bottom: var(--space-20);
+}
+
+.testimonials__heading-inner {
+  max-width: var(--container-max-width);
+  margin-inline: auto;
+  padding-left: var(--container-padding);
+  padding-right: var(--container-padding);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-8);
+}
+
+/* ── Section label row ──────────────────────────────────────── */
+.testimonials__label-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.testimonials__label-dot {
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: var(--radius-full);
+  background-color: var(--color-info);
+  flex-shrink: 0;
+}
+
+.testimonials__label-text {
+  font-family: var(--font-suisse);
+  font-size: var(--suisse-label-primary-fs);
+  font-weight: var(--suisse-label-primary-wt);
+  line-height: var(--suisse-label-primary-lh);
+  letter-spacing: var(--suisse-label-primary-ls);
+  color: var(--color-text-muted);
+}
+
+/* ── Display heading ────────────────────────────────────────── */
+.testimonials__display {
+  font-family: var(--font-gravity-normal);
+  font-size: var(--gravity-display-secondary-fs);
+  font-weight: var(--gravity-display-secondary-wt);
+  line-height: var(--gravity-display-secondary-lh);
+  letter-spacing: var(--gravity-display-secondary-ls);
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+/* Blue asterisk — smaller, superscript, clean */
+.testimonials__asterisk {
+  color: var(--color-info);
+  font-size: 0.5em;
+  vertical-align: super;
+  margin-left: var(--space-1);
+  line-height: 1;
+  font-weight: var(--wt-bold);
+}
+
+/* ── Footnote ───────────────────────────────────────────────── */
+.testimonials__footnote {
+  font-family: var(--font-suisse);
+  font-size: var(--suisse-body-secondary-fs);
+  font-weight: var(--suisse-body-secondary-wt);
+  line-height: var(--suisse-body-secondary-lh);
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+.testimonials__footnote-mark {
+  color: var(--color-info);
+}
+
+/* ════════════════════════════════════════════════════════════
+   MARQUEE STRIP — light background
+   ════════════════════════════════════════════════════════════ */
+.testimonials__marquee-strip {
+  background-color: var(--color-neutral-50);
+  width: 100%;
+  padding-top: var(--space-16);
+  padding-bottom: var(--space-16);
+}
+
+/* ── Viewport — clips the moving strip ──────────────────────── */
+.testimonials__viewport {
+  overflow: hidden;
+  width: 100%;
+}
+
+/* ── Track — infinite scroll left ───────────────────────────── */
+/*
+  translateX(0) → translateX(-50%) covers exactly one full set.
+  The duplicate second half is visually identical, so the snap
+  back to 0 is invisible — seamless loop.
+*/
+.testimonials__track {
+  display: flex;
+  gap: var(--space-4);
+  width: max-content;
+  animation: testimonials-scroll 30s linear infinite;
+}
+
+.testimonials__track:hover {
+  animation-play-state: paused;
+}
+
+@keyframes testimonials-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* ── Card ───────────────────────────────────────────────────── */
+.testimonial-card {
+  flex: 0 0 clamp(280px, 38vw, 440px);
+  background-color: var(--color-neutral-900);
+  border-radius: var(--radius-2xl);
+  border: var(--border-dark-default);
+  padding: var(--space-8);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--space-8);
+  min-height: 360px;
+}
+
+/* ── Card header: rating left, quote-icon right ─────────────── */
+.testimonial-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+/* ── Rating cluster ─────────────────────────────────────────── */
+.testimonial-card__rating {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.testimonial-card__rating-text {
+  font-family: var(--font-suisse);
+  font-size: var(--suisse-label-primary-fs);
+  font-weight: var(--suisse-label-primary-wt);
+  line-height: var(--suisse-label-primary-lh);
+  color: var(--color-text-muted);
+}
+
+.testimonial-card__stars {
+  display: flex;
+  gap: var(--space-1);
+}
+
+.testimonial-card__star {
+  font-size: 0.75rem;
+  color: var(--color-neutral-600);
+}
+
+.testimonial-card__star--filled {
+  color: var(--color-info);
+}
+
+/* ── Decorative closing-quote mark ──────────────────────────── */
+.testimonial-card__quote-icon {
+  font-family: var(--font-gravity-condensed);
+  font-size: 5rem;
+  line-height: 1;
+  color: var(--color-neutral-700);
+  user-select: none;
+  margin-top: -0.25rem;
+}
+
+/* ── Quote body ─────────────────────────────────────────────── */
+.testimonial-card__quote {
+  font-family: var(--font-gravity-normal);
+  font-size: var(--gravity-body-primary-fs);
+  font-weight: var(--gravity-body-primary-wt);
+  line-height: var(--gravity-body-primary-lh);
+  color: var(--color-text-primary);
+  margin: 0;
+  flex: 1;
+}
+
+/* ── Author row ─────────────────────────────────────────────── */
+.testimonial-card__author {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.testimonial-card__avatar {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: var(--radius-full);
+  background-color: var(--color-neutral-600);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.testimonial-card__avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.testimonial-card__avatar-placeholder {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-neutral-600);
+}
+
+.testimonial-card__name {
+  font-family: var(--font-suisse);
+  font-size: var(--suisse-body-secondary-fs);
+  font-weight: var(--suisse-body-secondary-wt);
+  line-height: var(--suisse-body-secondary-lh);
+  color: var(--color-text-primary);
+}
+
+/* ── Responsive ─────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .testimonials__heading-block {
+    padding-top: var(--space-16);
+    padding-bottom: var(--space-16);
+  }
+
+  .testimonials__heading-inner {
+    padding-left: var(--container-padding-sm);
+    padding-right: var(--container-padding-sm);
+  }
+
+  .testimonials__marquee-strip {
+    padding-top: var(--space-12);
+    padding-bottom: var(--space-12);
+  }
+
+  .testimonials__track {
+    gap: var(--space-3);
+    animation-duration: 22s;
+  }
+
+  .testimonial-card {
+    flex: 0 0 min(80vw, 320px);
+    padding: var(--space-6);
+    min-height: 300px;
+  }
+
+  .testimonial-card__quote-icon {
+    font-size: 3.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .testimonial-card {
+    flex: 0 0 85vw;
+  }
+}
+
+/* Respect reduced-motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .testimonials__track {
+    animation: none;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .testimonials__track::-webkit-scrollbar {
+    display: none;
+  }
+}

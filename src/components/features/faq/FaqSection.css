@@ -1,0 +1,229 @@
+/* ============================================================
+   FAQ SECTION
+   Light (#F9F9F9) background. Centered layout.
+   Header: label + large display heading, center-aligned.
+   List: full-width rounded cards, index + question + + icon.
+   Accordion: grid-rows 0fr→1fr smooth height animation.
+   ============================================================ */
+
+/* ── Section wrapper ────────────────────────────────────────── */
+.faq {
+  background-color: var(--color-neutral-50);
+  width: 100%;
+}
+
+/* ── Inner container — centered, constrained ────────────────── */
+.faq__inner {
+  max-width: var(--container-max-width);
+  margin-inline: auto;
+  padding-top: var(--space-20);
+  padding-bottom: var(--space-24);
+  padding-left: var(--container-padding);
+  padding-right: var(--container-padding);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-12);
+}
+
+/* ════════════════════════════════════════════════════════════
+   HEADER — centered label + display heading
+   ════════════════════════════════════════════════════════════ */
+.faq__header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+  text-align: center;
+}
+
+/* ── Label row ──────────────────────────────────────────────── */
+.faq__label-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.faq__label-dot {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: var(--radius-full);
+  background-color: var(--color-info);
+  flex-shrink: 0;
+}
+
+.faq__label-text {
+  font-family: var(--font-suisse);
+  font-size: var(--suisse-label-primary-fs);
+  font-weight: var(--suisse-label-primary-wt);
+  line-height: var(--suisse-label-primary-lh);
+  letter-spacing: var(--suisse-label-primary-ls);
+  color: var(--color-text-muted);
+}
+
+/* ── Display heading ────────────────────────────────────────── */
+.faq__display {
+  font-family: var(--font-gravity-normal);
+  font-size: var(--gravity-heading-secondary-fs);
+  font-weight: var(--wt-thin);
+  line-height: var(--gravity-heading-secondary-lh);
+  letter-spacing: var(--gravity-heading-secondary-ls);
+  color: var(--color-text-inverse);
+  margin: 0;
+}
+
+/* ════════════════════════════════════════════════════════════
+   ACCORDION LIST — full width cards
+   ════════════════════════════════════════════════════════════ */
+.faq__list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+/* ── Card ───────────────────────────────────────────────────── */
+.faq-item {
+  background-color: #ffffff;
+  border: var(--border-default);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: border-color var(--transition-ui);
+}
+
+.faq-item--open {
+  border-color: var(--color-neutral-300);
+}
+
+/* ── Trigger button ─────────────────────────────────────────── */
+.faq-item__trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  padding: var(--space-8) var(--space-8);
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+}
+
+/* ── Index ──────────────────────────────────────────────────── */
+.faq-item__index {
+  font-family: var(--font-suisse);
+  font-size: var(--suisse-body-secondary-fs);
+  font-weight: var(--suisse-body-secondary-wt);
+  line-height: var(--lh-snug);
+  color: var(--color-neutral-400);
+  white-space: nowrap;
+  flex-shrink: 0;
+  min-width: 2.5rem;
+}
+
+/* ── Question text ──────────────────────────────────────────── */
+.faq-item__question {
+  flex: 1;
+  font-family: var(--font-suisse);
+  font-size: var(--suisse-heading-quaternary-fs);
+  font-weight: var(--suisse-heading-quaternary-wt);
+  line-height: var(--suisse-heading-quaternary-lh);
+  color: var(--color-text-inverse);
+}
+
+/* ── Plus / minus icon — pure CSS cross ─────────────────────── */
+.faq-item__icon {
+  position: relative;
+  width: 1.25rem;
+  height: 1.25rem;
+  flex-shrink: 0;
+}
+
+.faq-item__icon::before,
+.faq-item__icon::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  background-color: var(--color-neutral-600);
+  border-radius: var(--radius-full);
+  transition:
+    transform          var(--transition-ui),
+    opacity            var(--transition-ui);
+}
+
+/* Horizontal bar */
+.faq-item__icon::before {
+  width: 1rem;
+  height: 1.5px;
+  transform: translate(-50%, -50%);
+}
+
+/* Vertical bar */
+.faq-item__icon::after {
+  width: 1.5px;
+  height: 1rem;
+  transform: translate(-50%, -50%);
+}
+
+/* ── Answer body — hidden until toggled ─────────────────────── */
+.faq-item__body {
+  display: none;
+}
+
+.faq-item--open .faq-item__body {
+  display: block;
+}
+
+.faq-item__body-inner {
+  padding: 0 var(--space-8) var(--space-8);
+  padding-left: calc(2.5rem + var(--space-5) + var(--space-8));
+}
+
+.faq-item__answer {
+  font-family: var(--font-suisse);
+  font-size: var(--suisse-body-secondary-fs);
+  font-weight: var(--suisse-body-secondary-wt);
+  line-height: var(--lh-relaxed);
+  color: var(--color-neutral-500);
+  max-width: 72ch;
+  margin: 0;
+}
+
+/* Open: vertical bar of + fades out → becomes − */
+.faq-item--open .faq-item__icon::after {
+  transform: translate(-50%, -50%) rotate(90deg);
+  opacity: 0;
+}
+
+/* ── Responsive ─────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .faq__inner {
+    padding-top: var(--space-16);
+    padding-bottom: var(--space-16);
+    padding-left: var(--container-padding-sm);
+    padding-right: var(--container-padding-sm);
+    gap: var(--space-8);
+  }
+
+  .faq__list {
+    gap: var(--space-3);
+  }
+
+  .faq-item__trigger {
+    padding: var(--space-5) var(--space-5);
+  }
+
+  .faq-item__question {
+    font-size: var(--suisse-body-primary-fs);
+  }
+
+  .faq-item__body-inner {
+    padding-left: var(--space-5);
+    padding-right: var(--space-5);
+    padding-bottom: var(--space-5);
+  }
+
+  .faq-item__answer {
+    max-width: 100%;
+  }
+}

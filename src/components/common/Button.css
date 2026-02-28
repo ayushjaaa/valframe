@@ -1,0 +1,75 @@
+/* ============================================================
+   BUTTON — Reusable CTA component
+   Variants: primary | secondary
+   Sizes: sm | md | lg
+   ============================================================ */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  font-family: var(--font-suisse);
+  font-size: var(--suisse-label-primary-fs);
+  font-weight: var(--suisse-label-primary-wt);
+  line-height: var(--suisse-label-primary-lh);
+  letter-spacing: var(--suisse-label-primary-ls);
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    background var(--transition-hover),
+    border-color var(--transition-hover),
+    color var(--transition-hover);
+}
+
+
+/* ── Variants ─────────────────────────────────────────────── */
+
+.btn--primary {
+  background: var(--color-cta-primary-bg);
+  color: var(--color-cta-primary-text);
+  border: var(--border-sm) solid transparent;
+}
+
+.btn--primary:hover:not(:disabled) {
+  background: var(--color-cta-primary-hover);
+}
+
+.btn--primary:active:not(:disabled) {
+  background: var(--color-cta-primary-active);
+}
+
+.btn--secondary {
+  background: var(--color-cta-secondary-bg);
+  color: var(--color-cta-secondary-text);
+  border: var(--border-sm) solid var(--color-cta-secondary-border);
+}
+
+.btn--secondary:hover:not(:disabled) {
+  background: var(--color-cta-secondary-hover);
+}
+
+
+/* ── Sizes ────────────────────────────────────────────────── */
+
+.btn--sm {
+  padding: var(--space-2) var(--space-5);
+}
+
+.btn--md {
+  padding: var(--space-3) var(--space-8);
+}
+
+.btn--lg {
+  padding: var(--space-4) var(--space-10);
+}
+
+
+/* ── Disabled ─────────────────────────────────────────────── */
+
+.btn--disabled,
+.btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}

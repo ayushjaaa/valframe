@@ -40,10 +40,6 @@
   --color-divider:         rgba(228, 228, 228, 0.5);
 
 
-  /* ── Border ───────────────────────────────────────────────*/
-  --color-border-primary:  #E4E4E4;                          /* default border colour */
-
-
   /* ── Text ─────────────────────────────────────────────────*/
   --color-text-primary:    #FFFFFF;                          /* default white — dark bg site */
   --color-text-secondary:  var(--_palette-neutral-600);      /* #525252 */
@@ -83,9 +79,17 @@
   --color-neutral-900:     var(--_palette-neutral-900);
 
 
+  /* ── UI Accents ───────────────────────────────────────────*/
+  --color-accent-pill-bg:  #1e1c2e;                          /* showreel pill dark background */
+  --color-accent-pill-text: rgba(255, 255, 255, 0.82);       /* showreel pill text */
+  --color-accent-dot:      #ff5533;                          /* live/recording indicator dot */
+
+
   /* ── Gradient ─────────────────────────────────────────────*/
   --gradient-dark:         #0A090B;                          /* solid dark for bg sections */
-  --gradient-hero:         ;                                  /* fill when designed */
-  --gradient-surface:      ;                                  /* fill when designed */
+  --gradient-hero:         linear-gradient(to bottom, #0A090B 0%, #0A090B 50%, #3d3d3d 72%, #979796 88%, #979796 100%); /* matches hero sticky panel */
+  --gradient-surface:      linear-gradient(to bottom, #979796 0%, #FFFFFF 100%);                                       /* works section surface blend */
+  --gradient-works-start:  #979796;                          /* matches hero bottom edge */
+  --gradient-works-end:    #FFFFFF;                          /* works section surface */
 
 }

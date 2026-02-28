@@ -7,9 +7,8 @@
   height: 100%;
   display: block;
   background: transparent;
-  will-change: transform;
-  transform-style: preserve-3d;
-  transform-origin: center bottom;
-  backface-visibility: hidden;
-  transition: transform 0.18s cubic-bezier(0, 0, 0.2, 1);
+  /* Canvas is redrawn every rAF frame — a CSS transition on the same
+     element creates a GPU compositing conflict that causes flicker.
+     The JS scroll hook handles all motion; no CSS transition needed. */
+  will-change: contents;
 }
