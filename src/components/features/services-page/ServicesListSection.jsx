@@ -63,51 +63,58 @@ const ServicesListSection = () => {
     {
       number: '01',
       title: 'SOFTWARE DEVELOPMENT',
-      tags: ['Lorem Ipsum', 'Lorem Ipsum', 'Lorem Ipsum'],
-      description: 'Lorem ipsum dolor sit amet consectetur. Egestas id orci felis et. Tempus turpis nibh habitant in turpis pretium lectus hendrerit risus.',
-      imageUrl: 'https://via.placeholder.com/400x250/B8B8B8/B8B8B8'
+      subtitle: 'Custom Systems. Built to Scale.',
+      tags: ['Scalable Architecture', 'High Performance', 'Enterprise Security'],
+      description: 'We build custom software engineered for performance, security, and long-term growth — no templates, only strategic development.',
+      imageUrl: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?w=800&q=80'
     },
     {
       number: '02',
-      title: 'HARDWARE',
-      tags: ['Lorem Ipsum', 'Lorem Ipsum', 'Lorem Ipsum'],
-      description: 'Lorem ipsum dolor sit amet consectetur. Egestas id orci felis et. Tempus turpis nibh habitant in turpis pretium lectus hendrerit risus.',
-      imageUrl: 'https://via.placeholder.com/400x250/B8B8B8/B8B8B8'
+      title: 'BRAND STRATEGY & SHOOT',
+      subtitle: 'Positioning That Feels Premium.',
+      tags: ['Brand Direction', 'Visual Identity', 'High-Impact Assets'],
+      description: 'We craft powerful brand identities and premium visuals that build authority, trust, and strong market presence.',
+      imageUrl: 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=800&q=80'
     },
     {
       number: '03',
       title: 'CYBER SECURITY',
-      tags: ['Lorem Ipsum', 'Lorem Ipsum', 'Lorem Ipsum'],
-      description: 'Lorem ipsum dolor sit amet consectetur. Egestas id orci felis et. Tempus turpis nibh habitant in turpis pretium lectus hendrerit risus.',
-      imageUrl: 'https://via.placeholder.com/400x250/B8B8B8/B8B8B8'
+      subtitle: 'Protection You Can Trust.',
+      tags: ['Threat Prevention', 'Data Security', 'Risk Monitoring'],
+      description: 'We secure your infrastructure with advanced protection systems that safeguard your data and reputation.',
+      imageUrl: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800&q=80'
     },
     {
       number: '04',
       title: 'CLOUD SERVICES',
-      tags: ['Lorem Ipsum', 'Lorem Ipsum', 'Lorem Ipsum'],
-      description: 'Lorem ipsum dolor sit amet consectetur. Egestas id orci felis et. Tempus turpis nibh habitant in turpis pretium lectus hendrerit risus.',
-      imageUrl: 'https://via.placeholder.com/400x250/B8B8B8/B8B8B8'
+      subtitle: 'Flexible. Fast. Scalable.',
+      tags: ['Cloud Migration', 'Performance Optimization', 'Cost Efficiency'],
+      description: 'We design scalable cloud environments that improve speed, flexibility, and operational efficiency.',
+      imageUrl: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&q=80'
     },
     {
       number: '05',
       title: 'AI & ML SERVICES',
-      tags: ['Lorem Ipsum', 'Lorem Ipsum', 'Lorem Ipsum'],
-      description: 'Lorem ipsum dolor sit amet consectetur. Egestas id orci felis et. Tempus turpis nibh habitant in turpis pretium lectus hendrerit risus.',
-      imageUrl: 'https://via.placeholder.com/400x250/B8B8B8/B8B8B8'
+      subtitle: 'Intelligence That Works for You.',
+      tags: ['Predictive Insights', 'Automation', 'Custom AI Models'],
+      description: 'We develop smart AI solutions that optimize processes and unlock smarter decision-making.',
+      imageUrl: 'https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=800&q=80'
     },
     {
       number: '06',
       title: 'WEB DEVELOPMENT',
-      tags: ['Lorem Ipsum', 'Lorem Ipsum', 'Lorem Ipsum'],
-      description: 'Lorem ipsum dolor sit amet consectetur. Egestas id orci felis et. Tempus turpis nibh habitant in turpis pretium lectus hendrerit risus.',
-      imageUrl: 'https://via.placeholder.com/400x250/B8B8B8/B8B8B8'
+      subtitle: 'Websites That Convert.',
+      tags: ['Custom Builds', 'Speed Optimization', 'Conversion Strategy'],
+      description: 'We create high-performance websites designed to engage users and drive measurable results.',
+      imageUrl: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=800&q=80'
     },
     {
       number: '07',
       title: 'UI/UX DESIGN',
-      tags: ['Lorem Ipsum', 'Lorem Ipsum', 'Lorem Ipsum'],
-      description: 'Lorem ipsum dolor sit amet consectetur. Egestas id orci felis et. Tempus turpis nibh habitant in turpis pretium lectus hendrerit risus.',
-      imageUrl: 'https://via.placeholder.com/400x250/B8B8B8/B8B8B8'
+      subtitle: 'Clean. Intuitive. Impactful.',
+      tags: ['User Research', 'Modern Interfaces', 'Experience Optimization'],
+      description: 'We design user-focused digital experiences that feel seamless, clear, and conversion-driven.',
+      imageUrl: 'https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?w=800&q=80'
     }
   ];
 
@@ -123,6 +130,7 @@ const ServicesListSection = () => {
             <div className="service-header">
               <div className="service-number">{service.number}</div>
               <h2 className="service-title">{service.title}</h2>
+              <p className="service-subtitle">{service.subtitle}</p>
             </div>
 
             <div className="service-content-wrapper">

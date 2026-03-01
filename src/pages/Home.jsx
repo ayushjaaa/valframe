@@ -11,6 +11,12 @@ import img2 from '../assets/images/2.jpeg'
 import img3 from '../assets/images/3.png'
 import img4 from '../assets/images/4.jpeg'
 import img5 from '../assets/images/5.jpeg'
+import taAnkit    from '../assets/images/tasti/WhatsApp Image 2026-03-02 at 01.06.18.jpeg'
+import taPawan    from '../assets/images/tasti/WhatsApp Image 2026-03-02 at 01.06.18 (1).jpeg'
+import taRahul    from '../assets/images/tasti/WhatsApp Image 2026-03-02 at 01.06.18 (2).jpeg'
+import taRathore  from '../assets/images/tasti/WhatsApp Image 2026-03-02 at 01.06.19.jpeg'
+import taBansal   from '../assets/images/tasti/WhatsApp Image 2026-03-02 at 01.08.03.jpeg'
+import taVaram    from '../assets/images/tasti/WhatsApp Image 2026-03-02 at 01.08.21.jpeg'
 
 const NAV_LINKS = [
   { label: 'Home',     href: '/' },
@@ -49,22 +55,44 @@ const TESTIMONIALS = [
   {
     rating: 5.0,
     quote: 'They completely understood our brand vision — better than we even imagined. The result is sharp, fast, and makes us stand out in a crowded market.',
-    name: 'Priya Mehta',
+    name: 'Ankit',
+    avatarSrc: taAnkit,
+    avatarAlt: 'Ankit',
   },
   {
     rating: 5.0,
     quote: 'From wireframes to final build, the Valframe team was insanely detail-oriented. Our bounce rate dropped by 42% after the redesign!',
-    name: 'Arjun Sinha',
+    name: 'Pawan',
+    avatarSrc: taPawan,
+    avatarAlt: 'Pawan',
   },
   {
     rating: 5.0,
     quote: 'They gave us more than a website — they gave us a brand identity. The aesthetics, responsiveness, and speed are on point!',
-    name: 'Ayesha Khan',
+    name: 'Rahul Chouksey',
+    avatarSrc: taRahul,
+    avatarAlt: 'Rahul Chouksey',
   },
   {
     rating: 5.0,
     quote: 'Their design thinking is top notch. Every element on our site now feels intentional and elegant. Clients always compliment the UI!',
-    name: 'Radhika Iyer',
+    name: 'Mr Vijay Rathore',
+    avatarSrc: taRathore,
+    avatarAlt: 'Mr Vijay Rathore',
+  },
+  {
+    rating: 5.0,
+    quote: 'Professional, fast, and pixel-perfect. Valframe delivered beyond our expectations — our clients love the new look!',
+    name: 'Mr Bansal',
+    avatarSrc: taBansal,
+    avatarAlt: 'Mr Bansal',
+  },
+  {
+    rating: 5.0,
+    quote: 'Working with Valframe was seamless from start to finish. The attention to detail and quality of work is truly outstanding.',
+    name: 'AK Varam',
+    avatarSrc: taVaram,
+    avatarAlt: 'AK Varam',
   },
 ]
 

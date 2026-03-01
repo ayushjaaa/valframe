@@ -61,6 +61,15 @@
   flex: 1;
 }
 
+.service-subtitle {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 400;
+  font-size: clamp(14px, 1.5vw, 18px);
+  color: rgba(255, 255, 255, 0.5);
+  margin: 0;
+  letter-spacing: 0.01em;
+}
+
 .service-content-wrapper {
   margin-top: 30px;
 }
