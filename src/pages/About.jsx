@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom'
+import { openWhatsApp } from '../utils/openWhatsApp'
 import Navbar from '../components/features/navbar'
 import AboutSection from '../components/features/about/AboutSection'
 import FooterSection from '../components/features/footer'
@@ -10,15 +10,12 @@ const NAV_LINKS = [
 ]
 
 function About() {
-  const navigate = useNavigate()
-
   return (
     <>
       <Navbar
-        logo="Valframe"
         links={NAV_LINKS}
         ctaLabel="Contact Us"
-        onCtaClick={() => navigate('/contact')}
+        onCtaClick={openWhatsApp}
       />
       <AboutSection />
       <FooterSection />

@@ -387,12 +387,13 @@ export function getScreenQuad(W, H, prog) {
 
 // ─── Component ────────────────────────────────────────────────────────────
 function MonitorCanvas({ canvasElRef, onScrollProgress }) {
-  const canvasRef = useRef(null)
-  const dprRef    = useRef(window.devicePixelRatio || 1)
-  const ctxRef    = useRef(null)
-  const videoRef  = useRef(null)
-  const progRef   = useRef(0)
-  const rafRef    = useRef(null)
+  const canvasRef      = useRef(null)
+  const dprRef         = useRef(window.devicePixelRatio || 1)
+  const ctxRef         = useRef(null)
+  const videoRef       = useRef(null)
+  const progRef        = useRef(0)
+  const rafRef         = useRef(null)
+  const pendingDrawRef = useRef(null)
 
   // Stable callback ref — prevents useMonitorScroll from re-running its effect
   // on every render (which repeatedly adds/removes the scroll listener mid-scroll).
@@ -400,11 +401,15 @@ function MonitorCanvas({ canvasElRef, onScrollProgress }) {
   const onProgress = useCallback((rawProg) => {
     progRef.current = rawProg
     if (onScrollProgress) onScrollProgress(rawProg)
-    // When no RAF loop is running (video not ready), draw once per scroll tick
-    if (!rafRef.current) {
-      const canvas = canvasRef.current
-      const ctx    = ctxRef.current
-      if (canvas && ctx) drawMonitor(canvas, ctx, dprRef.current, rawProg)
+    // When no RAF loop is running (video not ready), schedule a draw via rAF
+    // so it never blocks the scroll event handler on the main thread (fixes INP)
+    if (!rafRef.current && !pendingDrawRef.current) {
+      pendingDrawRef.current = requestAnimationFrame(() => {
+        pendingDrawRef.current = null
+        const canvas = canvasRef.current
+        const ctx    = ctxRef.current
+        if (canvas && ctx) drawMonitor(canvas, ctx, dprRef.current, progRef.current, videoRef.current)
+      })
     }
   }, [onScrollProgress])
 
@@ -437,17 +442,41 @@ function MonitorCanvas({ canvasElRef, onScrollProgress }) {
       drawMonitor(canvas, ctx, dprRef.current, progRef.current, video)
     }
 
-    // RAF loop — only runs while video is playing to avoid wasted frames.
-    // Started once on canplay and never duplicated (guard via rafRef).
+    // Visibility flag — RAF loop pauses when canvas is off-screen
+    let isVisible = true
+
+    // RAF loop — runs only while video is playing AND canvas is in viewport.
     function loop() {
+      if (!isVisible) {
+        rafRef.current = null
+        return
+      }
       drawMonitor(canvas, ctx, dprRef.current, progRef.current, video)
       rafRef.current = requestAnimationFrame(loop)
     }
 
     function startLoop() {
       if (rafRef.current) return   // already running — never start a second loop
-      loop()
+      if (isVisible) loop()
     }
+
+    function stopLoop() {
+      if (rafRef.current) {
+        cancelAnimationFrame(rafRef.current)
+        rafRef.current = null
+      }
+    }
+
+    // IntersectionObserver — pause RAF when hero leaves viewport, resume on re-entry
+    const observer = new IntersectionObserver(
+      (entries) => {
+        isVisible = entries[0].isIntersecting
+        if (isVisible && video.readyState >= 2) startLoop()
+        else stopLoop()
+      },
+      { threshold: 0 }
+    )
+    observer.observe(canvas)
 
     video.addEventListener('canplay', () => {
       video.play().catch(() => {})
@@ -458,7 +487,9 @@ function MonitorCanvas({ canvasElRef, onScrollProgress }) {
     window.addEventListener('resize', resize)
     return () => {
       window.removeEventListener('resize', resize)
-      if (rafRef.current) cancelAnimationFrame(rafRef.current)
+      observer.disconnect()
+      stopLoop()
+      if (pendingDrawRef.current) cancelAnimationFrame(pendingDrawRef.current)
       video.pause()
     }
   }, [])

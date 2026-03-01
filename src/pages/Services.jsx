@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom'
+import { openWhatsApp } from '../utils/openWhatsApp'
 import Navbar from '../components/features/navbar'
 import ServicesHero from '../components/features/services-page/ServicesHero'
 import ServicesCarousel from '../components/features/services-page/ServicesCarousel'
@@ -12,14 +12,12 @@ const NAV_LINKS = [
 ]
 
 function Services() {
-  const navigate = useNavigate()
-
   return (
     <>
       <Navbar
         links={NAV_LINKS}
         ctaLabel="Contact Us"
-        onCtaClick={() => navigate('/contact')}
+        onCtaClick={openWhatsApp}
       />
       <ServicesHero />
       <ServicesCarousel />

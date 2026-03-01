@@ -1,4 +1,4 @@
-import { useRef, useCallback } from 'react'
+import { useRef, useCallback, useEffect } from 'react'
 import MonitorCanvas, { getScreenQuad } from './MonitorCanvas'
 import './Hero.css'
 
@@ -25,40 +25,79 @@ function Hero({
   descriptionRight = 'Digital Studio +\nValframe Solution',
   mobileSubheading = 'High-converting websites for startups & businesses.',
 }) {
-  const pillRef     = useRef(null)
-  const canvasRef   = useRef(null)   // set via MonitorCanvas callback ref
-  const progRef     = useRef(0)      // mirrors scroll progress
+  const pillRef        = useRef(null)
+  const canvasRef      = useRef(null)   // set via MonitorCanvas callback ref
+  const progRef        = useRef(0)      // mirrors scroll progress
+  const quadRef        = useRef(null)   // cached screen quad — recomputed only when prog changes
+  const canvasSizeRef  = useRef({ w: 0, h: 0 }) // cached canvas dimensions
+  const mousePendingRef = useRef(null)  // rAF handle for mousemove batching
+  const wrapperRef     = useRef(null)   // ref to the canvas wrapper for ResizeObserver
+
+  // Cache canvas dimensions via ResizeObserver — zero reflow on mousemove
+  useEffect(() => {
+    const wrapper = wrapperRef.current
+    if (!wrapper) return
+    const ro = new ResizeObserver((entries) => {
+      const e = entries[0]
+      if (!e) return
+      canvasSizeRef.current = { w: e.contentRect.width, h: e.contentRect.height }
+      // Invalidate cached quad when size changes
+      quadRef.current = null
+    })
+    ro.observe(wrapper)
+    return () => ro.disconnect()
+  }, [])
 
   const handleMouseMove = useCallback((e) => {
-    const pill   = pillRef.current
-    const canvas = canvasRef.current
+    const pill = pillRef.current
     if (!pill) return
 
-    const rect = e.currentTarget.getBoundingClientRect()
-    const x = e.clientX - rect.left
-    const y = e.clientY - rect.top
+    // Capture event coords synchronously (e is pooled, can't use inside rAF)
+    const clientX = e.clientX
+    const clientY = e.clientY
+    const wrapperEl = wrapperRef.current
 
-    // Always move pill to cursor
-    pill.style.left      = x + 'px'
-    pill.style.top       = y + 'px'
-    pill.style.transform = 'translate(-50%, -50%)'
+    if (mousePendingRef.current) return  // already a frame queued — skip
+    mousePendingRef.current = requestAnimationFrame(() => {
+      mousePendingRef.current = null
+      if (!wrapperEl) return
 
-    // Check if cursor is inside the monitor screen quad
-    if (canvas) {
-      const W    = canvas.offsetWidth
-      const H    = canvas.offsetHeight
-      const quad = getScreenQuad(W, H, progRef.current)
-      const inside = pointInQuad(x, y, quad.tl, quad.tr, quad.br, quad.bl)
-      pill.classList.toggle('hero__showreel-pill--visible', inside)
-    }
+      // Single layout read — getBoundingClientRect once per rAF frame
+      const rect = wrapperEl.getBoundingClientRect()
+      const x = clientX - rect.left
+      const y = clientY - rect.top
+
+      // Batch all writes together after the single read
+      pill.style.left      = x + 'px'
+      pill.style.top       = y + 'px'
+      pill.style.transform = 'translate(-50%, -50%)'
+
+      // Use cached quad — recompute only when progress or canvas size changed
+      if (!quadRef.current) {
+        const { w, h } = canvasSizeRef.current
+        if (w > 0 && h > 0) {
+          quadRef.current = getScreenQuad(w, h, progRef.current)
+        }
+      }
+      if (quadRef.current) {
+        const { tl, tr, br, bl } = quadRef.current
+        const inside = pointInQuad(x, y, tl, tr, br, bl)
+        pill.classList.toggle('hero__showreel-pill--visible', inside)
+      }
+    })
   }, [])
 
   const handleMouseLeave = useCallback(() => {
+    if (mousePendingRef.current) {
+      cancelAnimationFrame(mousePendingRef.current)
+      mousePendingRef.current = null
+    }
     if (pillRef.current) pillRef.current.classList.remove('hero__showreel-pill--visible')
   }, [])
 
   const handleProgress = useCallback((p) => {
     progRef.current = p
+    quadRef.current = null  // invalidate cached quad on scroll
   }, [])
 
   return (
@@ -97,7 +136,12 @@ function Hero({
         </div>
 
         {/* ── Canvas Monitor ────────────────────────────── */}
-        <div className="hero__canvas-wrapper" onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave}>
+        <div
+          ref={wrapperRef}
+          className="hero__canvas-wrapper"
+          onMouseMove={handleMouseMove}
+          onMouseLeave={handleMouseLeave}
+        >
           <MonitorCanvas canvasElRef={canvasRef} onScrollProgress={handleProgress} />
           {/* ── Play Showreel Pill — follows cursor ───── */}
           <div ref={pillRef} className="hero__showreel-pill" aria-hidden="true">

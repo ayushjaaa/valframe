@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom'
+import { openWhatsApp } from '../utils/openWhatsApp'
 import './Home.css'
 import Navbar from '../components/features/navbar'
 import Hero from '../components/features/hero'
@@ -147,10 +147,8 @@ const WORKS_ITEMS = [
 ]
 
 function Home() {
-  const navigate = useNavigate()
-
   function handleStartProject() {
-    navigate('/contact')
+    openWhatsApp("Hi Valframe! I'd like to start a project with you.")
   }
 
   return (
