@@ -6,9 +6,7 @@ import ServicesSection from '../components/features/services'
 import WorksSection from '../components/features/works'
 import TestimonialsSection from '../components/features/testimonials'
 import FaqSection from '../components/features/faq'
-import TeamSection from '../components/features/team/TeamSection'
 import FooterSection from '../components/features/footer'
-import founderImg from '../assets/images/founder.jpeg'
 import img2 from '../assets/images/2.jpeg'
 import img3 from '../assets/images/3.png'
 import img4 from '../assets/images/4.jpeg'
@@ -24,6 +22,7 @@ const NAV_LINKS = [
   { label: 'Home',     href: '/' },
   { label: 'Services', href: '/services' },
   { label: 'About',    href: '/about' },
+  { label: 'Contact',  href: '/contact' },
 ]
 
 /* ── Services data ──────────────────────────────────────────
@@ -128,17 +127,6 @@ const FAQS = [
   },
 ]
 
-/* ── Team data ───────────────────────────────────────────────
-   Top row: first 2 members (right side of heading)
-   Bottom row: remaining 3 members
-─────────────────────────────────────────────────────────── */
-const TEAM_MEMBERS = [
-  { name: 'Ayush Jaiswal',        role: 'CEO',                      src: founderImg, alt: 'Ayush Jaiswal' },
-  { name: 'Balakrishna Paramar',  role: 'Software Developer',       src: null },
-  { name: 'Harsh Jaiswal',        role: 'Software Developer',       src: null },
-  { name: 'Devashinsh Bhavasr',   role: 'TL & Senior Developer',    src: null },
-  { name: 'Mainsha',              role: 'UI & UX Designer',         src: null },
-]
 
 const WORKS_ITEMS = [
   {
@@ -199,7 +187,7 @@ function Home() {
       <Navbar
         links={NAV_LINKS}
         ctaLabel="Contact Us"
-        onCtaClick={handleStartProject}
+        ctaHref="/contact"
       />
 
       <Hero
@@ -220,10 +208,6 @@ function Home() {
 
       <FaqSection faqs={FAQS} />
 
-      <TeamSection
-        heading="The people behind Valframe"
-        members={TEAM_MEMBERS}
-      />
 
       <FooterSection />
 

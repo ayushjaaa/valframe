@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import logoImg from '../../../assets/svg/logo.svg'
 import './Navbar.css'
 
-function Navbar({ logo, logoAlt = 'Valframe', links = [], ctaLabel = 'Contact Us', onCtaClick }) {
+function Navbar({ logo, logoAlt = 'Valframe', links = [], ctaLabel = 'Contact Us', ctaHref, onCtaClick }) {
   const logoSrc = logo || logoImg
   const [open, setOpen] = useState(false)
 
@@ -30,10 +30,17 @@ function Navbar({ logo, logoAlt = 'Valframe', links = [], ctaLabel = 'Contact Us
         </nav>
 
         <div className="navbar__cta">
-          <button className="navbar__btn" onClick={onCtaClick}>
-            <span className="navbar__btn-dot" aria-hidden="true" />
-            {ctaLabel}
-          </button>
+          {ctaHref ? (
+            <Link to={ctaHref} className="navbar__btn">
+              <span className="navbar__btn-dot" aria-hidden="true" />
+              {ctaLabel}
+            </Link>
+          ) : (
+            <button className="navbar__btn" onClick={onCtaClick}>
+              <span className="navbar__btn-dot" aria-hidden="true" />
+              {ctaLabel}
+            </button>
+          )}
         </div>
 
         {/* Hamburger — mobile only */}
@@ -75,10 +82,17 @@ function Navbar({ logo, logoAlt = 'Valframe', links = [], ctaLabel = 'Contact Us
           ))}
         </nav>
         <div className="navbar__drawer-cta">
-          <button className="navbar__btn" onClick={() => { closeDrawer(); onCtaClick?.() }}>
-            <span className="navbar__btn-dot" aria-hidden="true" />
-            {ctaLabel}
-          </button>
+          {ctaHref ? (
+            <Link to={ctaHref} className="navbar__btn" onClick={closeDrawer}>
+              <span className="navbar__btn-dot" aria-hidden="true" />
+              {ctaLabel}
+            </Link>
+          ) : (
+            <button className="navbar__btn" onClick={() => { closeDrawer(); onCtaClick?.() }}>
+              <span className="navbar__btn-dot" aria-hidden="true" />
+              {ctaLabel}
+            </button>
+          )}
         </div>
       </div>
 
