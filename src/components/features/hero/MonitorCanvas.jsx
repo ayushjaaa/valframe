@@ -392,6 +392,7 @@ function MonitorCanvas({ canvasElRef, onScrollProgress }) {
   const ctxRef         = useRef(null)
   const videoRef       = useRef(null)
   const progRef        = useRef(0)
+  const lastProgRef    = useRef(-1)   // track last drawn prog to skip redundant redraws
   const rafRef         = useRef(null)
   const pendingDrawRef = useRef(null)
 
@@ -451,7 +452,14 @@ function MonitorCanvas({ canvasElRef, onScrollProgress }) {
         rafRef.current = null
         return
       }
-      drawMonitor(canvas, ctx, dprRef.current, progRef.current, video)
+      const prog = progRef.current
+      // When video is playing, redraw every frame (video content changes each frame).
+      // When video is not ready, skip if prog hasn't changed — saves CPU on static frames.
+      const videoPlaying = video.readyState >= 2 && !video.paused
+      if (videoPlaying || prog !== lastProgRef.current) {
+        drawMonitor(canvas, ctx, dprRef.current, prog, video)
+        lastProgRef.current = prog
+      }
       rafRef.current = requestAnimationFrame(loop)
     }
 

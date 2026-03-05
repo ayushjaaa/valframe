@@ -9,6 +9,8 @@
   background: transparent;
   /* Canvas is redrawn every rAF frame — a CSS transition on the same
      element creates a GPU compositing conflict that causes flicker.
-     The JS scroll hook handles all motion; no CSS transition needed. */
-  will-change: contents;
+     The JS scroll hook handles all motion; no CSS transition needed.
+     will-change: transform promotes the canvas to its own compositor layer
+     so scale/translateY applied by useMonitorScroll doesn't trigger repaint. */
+  will-change: transform;
 }

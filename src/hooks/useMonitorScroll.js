@@ -34,7 +34,10 @@ function useMonitorScroll(elementRef, onProgress, options = {}) {
       return
     }
 
+    let rafId = null
+
     function update() {
+      rafId = null
       const scrollY   = window.scrollY
       const maxScroll = window.innerHeight * maxScrollFactor
       const rawProg   = Math.min(scrollY / maxScroll, 1)
@@ -49,9 +52,17 @@ function useMonitorScroll(elementRef, onProgress, options = {}) {
       if (onProgress) onProgress(rawProg)
     }
 
+    function onScroll() {
+      if (rafId !== null) return   // already a frame pending — skip
+      rafId = requestAnimationFrame(update)
+    }
+
     update()
-    window.addEventListener('scroll', update, { passive: true })
-    return () => window.removeEventListener('scroll', update)
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      if (rafId !== null) cancelAnimationFrame(rafId)
+    }
   }, [elementRef, onProgress, maxScrollFactor, scaleStart, scaleEnd, translateYStart])
 }
 
