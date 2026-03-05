@@ -2,12 +2,14 @@ import './ServicesSection.css'
 
 /* ── Individual service capsule ────────────────────────────── */
 function ServiceCapsule({ title, index, onClick }) {
+  const num = String(index + 1).padStart(2, '0')
   return (
     <article
       className="service-capsule"
       style={{ '--index': index }}
       onClick={onClick}
     >
+      <span className="service-capsule__num">{num}</span>
       <h3 className="service-capsule__title">{title}</h3>
     </article>
   )
@@ -21,10 +23,15 @@ function ServicesSection({ services = [], onStartProject }) {
 
         {/* Header */}
         <div className="services__header">
+          <div className="services__label-row">
+            <span className="services__label-dot" aria-hidden="true" />
+            <span className="services__label-text">{'{02}'} — Services</span>
+          </div>
           <h2 className="services__title">Services</h2>
+          <p className="services__subtitle">Everything you need to launch and grow online.</p>
         </div>
 
-        {/* Centered capsule stack */}
+        {/* Capsule list */}
         <div className="services__list">
           {services.map((svc, i) => (
             <ServiceCapsule key={i} {...svc} index={i} onClick={onStartProject} />

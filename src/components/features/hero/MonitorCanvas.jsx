@@ -484,7 +484,8 @@ function MonitorCanvas({ canvasElRef, onScrollProgress }) {
       },
       { threshold: 0 }
     )
-    observer.observe(canvas)
+    const observeTarget = canvas.closest('.hero__sticky') || canvas
+    observer.observe(observeTarget)
 
     video.addEventListener('canplay', () => {
       video.play().catch(() => {})

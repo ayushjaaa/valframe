@@ -31,15 +31,45 @@
 .services__inner {
   max-width: var(--container-max-width);
   margin-inline: auto;
+  min-height: 100vh;
   padding-top: var(--space-16);
   padding-bottom: var(--space-20);
   padding-left: var(--container-padding);
   padding-right: var(--container-padding);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 /* ── Header ─────────────────────────────────────────────────── */
 .services__header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
   margin-bottom: var(--space-10);
+}
+
+.services__label-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.services__label-dot {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: var(--radius-full);
+  background-color: var(--color-info);
+  flex-shrink: 0;
+}
+
+.services__label-text {
+  font-family: var(--font-suisse);
+  font-size: var(--suisse-label-primary-fs);
+  font-weight: var(--suisse-label-primary-wt);
+  line-height: var(--suisse-label-primary-lh);
+  letter-spacing: var(--suisse-label-primary-ls);
+  color: var(--color-text-muted);
 }
 
 .services__title {
@@ -49,24 +79,33 @@
   line-height: var(--gravity-display-secondary-lh);
   letter-spacing: var(--gravity-display-secondary-ls);
   color: var(--color-text-inverse);
+  margin: 0;
 }
 
-/* ── Capsule row — wrapping flex ────────────────────────────── */
+.services__subtitle {
+  font-family: var(--font-suisse);
+  font-size: var(--suisse-body-secondary-fs);
+  font-weight: var(--suisse-body-secondary-wt);
+  line-height: var(--suisse-body-secondary-lh);
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+/* ── Capsule row — controlled wrap ──────────────────────────── */
 .services__list {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(3, auto);
   justify-content: center;
-  gap: var(--space-3);
+  gap: var(--space-4);
 }
 
 /* ── Capsule ────────────────────────────────────────────────── */
 .service-capsule {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-4);
+  gap: var(--space-3);
   width: fit-content;
-  padding: var(--space-2) var(--space-5);
+  padding: var(--space-4) var(--space-8);
   border-radius: var(--radius-full);
   border: var(--border-default);
   background-color: transparent;
@@ -89,10 +128,25 @@
   transform: translateY(-2px);
 }
 
+/* ── Number ─────────────────────────────────────────────────── */
+.service-capsule__num {
+  font-family: var(--font-suisse);
+  font-size: var(--suisse-caption-primary-fs);
+  font-weight: var(--suisse-caption-primary-wt);
+  line-height: 1;
+  color: var(--color-text-muted);
+  transition: color var(--duration-moderate) var(--ease-out);
+  flex-shrink: 0;
+}
+
+.service-capsule:hover .service-capsule__num {
+  color: var(--color-text-secondary);
+}
+
 /* ── Title ──────────────────────────────────────────────────── */
 .service-capsule__title {
   font-family: var(--font-suisse);
-  font-size: var(--suisse-label-primary-fs);
+  font-size: var(--suisse-body-secondary-fs);
   font-weight: var(--wt-medium);
   line-height: var(--lh-snug);
   letter-spacing: var(--suisse-label-primary-ls);
