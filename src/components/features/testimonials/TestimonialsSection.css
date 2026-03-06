@@ -8,6 +8,7 @@
 /* ── Section root ───────────────────────────────────────────── */
 .testimonials {
   width: 100%;
+  background-color: var(--color-background);
 }
 
 /* ════════════════════════════════════════════════════════════
@@ -97,14 +98,18 @@
 .testimonials__marquee-strip {
   background-color: var(--color-neutral-50);
   width: 100%;
+  overflow: clip;
+  contain: layout;
   padding-top: var(--space-16);
   padding-bottom: var(--space-16);
 }
 
 /* ── Viewport — clips the moving strip ──────────────────────── */
 .testimonials__viewport {
-  overflow: hidden;
+  overflow: clip;
+  contain: layout;
   width: 100%;
+  max-width: 100%;
 }
 
 /* ── Track — infinite scroll left ───────────────────────────── */

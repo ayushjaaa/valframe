@@ -4,14 +4,16 @@ import './ServicesSection.css'
 function ServiceCapsule({ title, index, onClick }) {
   const num = String(index + 1).padStart(2, '0')
   return (
-    <article
+    <button
       className="service-capsule"
       style={{ '--index': index }}
       onClick={onClick}
+      type="button"
     >
       <span className="service-capsule__num">{num}</span>
-      <h3 className="service-capsule__title">{title}</h3>
-    </article>
+      <span className="service-capsule__title">{title}</span>
+      <span className="service-capsule__arrow" aria-hidden="true">↗</span>
+    </button>
   )
 }
 

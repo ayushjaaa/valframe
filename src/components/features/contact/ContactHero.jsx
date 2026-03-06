@@ -51,8 +51,8 @@ const ContactHero = () => {
 
         <p className="contact-hero-subtitle">
           Let's map your next move—schedule a free strategy session or reach out directly at{' '}
-          <a href="mailto:hello@valframesolution.com" className="contact-email">
-            hello@valframesolution.com
+          <a href="mailto:info@valframe.com" className="contact-email">
+            info@valframe.com
           </a>
         </p>
 

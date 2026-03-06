@@ -19,7 +19,8 @@
 
 /* ── Section — full-width gradient carrier ──────────────────── */
 .services {
-  background: linear-gradient(
+  background-color: #FFFFFF;
+  background-image: linear-gradient(
     to bottom,
     var(--gradient-works-start) 0%,
     var(--gradient-works-end)   18%
@@ -31,14 +32,13 @@
 .services__inner {
   max-width: var(--container-max-width);
   margin-inline: auto;
-  min-height: 100vh;
-  padding-top: var(--space-16);
+  padding-top: var(--space-20);
   padding-bottom: var(--space-20);
   padding-left: var(--container-padding);
   padding-right: var(--container-padding);
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  gap: var(--space-8);
 }
 
 /* ── Header ─────────────────────────────────────────────────── */
@@ -46,7 +46,6 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-4);
-  margin-bottom: var(--space-10);
 }
 
 .services__label-row {
@@ -94,18 +93,20 @@
 /* ── Capsule row — controlled wrap ──────────────────────────── */
 .services__list {
   display: grid;
-  grid-template-columns: repeat(3, auto);
-  justify-content: center;
-  gap: var(--space-4);
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-3);
 }
 
 /* ── Capsule ────────────────────────────────────────────────── */
 .service-capsule {
-  display: inline-flex;
+  display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: var(--space-3);
-  width: fit-content;
-  padding: var(--space-4) var(--space-8);
+  width: 100%;
+  min-width: 0;
+  overflow: hidden;
+  padding: var(--space-4) var(--space-6);
   border-radius: var(--radius-full);
   border: var(--border-default);
   background-color: transparent;
@@ -140,7 +141,7 @@
 }
 
 .service-capsule:hover .service-capsule__num {
-  color: var(--color-text-secondary);
+  color: var(--color-text-muted);
 }
 
 /* ── Title ──────────────────────────────────────────────────── */
@@ -152,11 +153,33 @@
   letter-spacing: var(--suisse-label-primary-ls);
   color: var(--color-text-inverse);
   white-space: nowrap;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
   transition: color var(--duration-moderate) var(--ease-out);
 }
 
 .service-capsule:hover .service-capsule__title {
   color: var(--color-text-primary);
+}
+
+/* ── Arrow ──────────────────────────────────────────────────── */
+.service-capsule__arrow {
+  display: inline-flex;
+  font-size: 0.85em;
+  line-height: 1;
+  color: var(--color-text-muted);
+  margin-left: var(--space-1);
+  transition:
+    color     var(--duration-moderate) var(--ease-out),
+    transform var(--duration-moderate) var(--ease-spring);
+  flex-shrink: 0;
+}
+
+.service-capsule:hover .service-capsule__arrow {
+  color: var(--color-text-primary);
+  transform: translate(2px, -2px);
 }
 
 /* ── Footer CTA strip ───────────────────────────────────────── */
@@ -166,7 +189,6 @@
   justify-content: space-between;
   flex-wrap: wrap;
   gap: var(--space-6);
-  margin-top: var(--space-12);
   padding-top: var(--space-8);
   border-top: var(--border-default);
 }
@@ -218,7 +240,28 @@
 
 /* ── Responsive ─────────────────────────────────────────────── */
 
-@media (max-width: 640px) {
+/* 3-col on any screen narrower than 1280px (container max-width) */
+@media (max-width: 1279px) {
+  .services__list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* 2-col from 768px up to 1279px */
+@media (max-width: 767px) {
+  .services__inner {
+    padding-top: var(--space-12);
+    padding-bottom: var(--space-16);
+  }
+
+  .services__list {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-2);
+  }
+}
+
+/* 1-col on small mobile */
+@media (max-width: 480px) {
   .services__inner {
     padding-top: var(--space-12);
     padding-bottom: var(--space-16);
@@ -226,13 +269,17 @@
     padding-right: var(--container-padding-sm);
   }
 
-  .service-capsule {
-    max-width: 100%;
-    padding: var(--space-5) var(--space-6);
+  .services__list {
+    grid-template-columns: 1fr;
+    gap: var(--space-2);
   }
 
-  .service-capsule:hover {
-    max-width: 100%;
+  .service-capsule {
+    padding: var(--space-4) var(--space-5);
+  }
+
+  .service-capsule__arrow {
+    margin-left: 0;
   }
 
   .services__footer {

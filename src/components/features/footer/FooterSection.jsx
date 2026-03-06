@@ -146,10 +146,10 @@ function FooterSection() {
             <address className="site-footer__contact">
               <span className="site-footer__contact-label">Let's chat</span>
               <a
-                href="mailto:hello@valframesolution.com"
+                href="mailto:info@valframe.com"
                 className="site-footer__contact-email"
               >
-                hello@valframesolution.com
+                info@valframe.com
               </a>
             </address>
           </div>
