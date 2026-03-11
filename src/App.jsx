@@ -1,13 +1,16 @@
 import { Component } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import Home         from './pages/Home'
-import Work         from './pages/Work'
-import CaseStudy    from './pages/CaseStudyPage'
-import Services     from './pages/Services'
-import About        from './pages/About'
-import Blog         from './pages/Blog'
-import Contact      from './pages/ContactPage'
-import NotFound     from './pages/NotFound'
+import Home            from './pages/Home'
+import Work            from './pages/Work'
+import CaseStudy       from './pages/CaseStudyPage'
+import Services        from './pages/Services'
+import About           from './pages/About'
+import Blog            from './pages/Blog'
+import Contact         from './pages/ContactPage'
+import PrivacyPolicy   from './pages/PrivacyPolicy'
+import TermsConditions from './pages/TermsConditions'
+import CookiePolicy    from './pages/CookiePolicy'
+import NotFound        from './pages/NotFound'
 
 class ErrorBoundary extends Component {
   constructor(props) {
@@ -44,6 +47,9 @@ function App() {
           <Route path="/about"    element={<About />} />
           <Route path="/blog"     element={<Blog />} />
           <Route path="/contact"  element={<Contact />} />
+          <Route path="/privacy"  element={<PrivacyPolicy />} />
+          <Route path="/terms"    element={<TermsConditions />} />
+          <Route path="/cookies"  element={<CookiePolicy />} />
           <Route path="*"         element={<NotFound />} />
         </Routes>
       </BrowserRouter>

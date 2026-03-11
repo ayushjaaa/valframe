@@ -1,0 +1,194 @@
+/* ============================================================
+   LEGAL PAGE — Privacy Policy & Terms and Conditions
+   Shared layout for all static legal content pages.
+   ============================================================ */
+
+.legal-page {
+  background-color: var(--color-background);
+  min-height: 100vh;
+}
+
+/* ── Hero band ─────────────────────────────────────────────── */
+.legal-page__hero {
+  padding-top: var(--space-24);
+  padding-bottom: var(--space-12);
+  border-bottom: 1px solid var(--color-divider);
+}
+
+.legal-page__hero-inner {
+  max-width: var(--container-max-width);
+  margin-inline: auto;
+  padding-inline: var(--container-padding);
+}
+
+.legal-page__eyebrow {
+  font-family: var(--font-suisse);
+  font-size: var(--suisse-label-primary-fs);
+  font-weight: var(--suisse-label-primary-wt);
+  line-height: var(--suisse-label-primary-lh);
+  letter-spacing: var(--suisse-label-primary-ls);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  margin-bottom: var(--space-4);
+}
+
+.legal-page__title {
+  font-family: var(--font-gravity-condensed);
+  font-size: var(--gravity-heading-primary-fs);
+  font-weight: var(--gravity-heading-primary-wt);
+  line-height: var(--gravity-heading-primary-lh);
+  letter-spacing: var(--gravity-heading-primary-ls);
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-4);
+}
+
+.legal-page__date {
+  font-family: var(--font-suisse);
+  font-size: var(--suisse-body-tertiary-fs);
+  font-weight: var(--suisse-body-tertiary-wt);
+  line-height: var(--suisse-body-tertiary-lh);
+  color: var(--color-text-muted);
+}
+
+/* ── Content body ──────────────────────────────────────────── */
+.legal-page__content {
+  max-width: var(--container-max-width);
+  margin-inline: auto;
+  padding-inline: var(--container-padding);
+  padding-top: var(--space-16);
+  padding-bottom: var(--space-24);
+}
+
+/* ── Intro paragraph ───────────────────────────────────────── */
+.legal-page__intro {
+  font-family: var(--font-suisse);
+  font-size: var(--suisse-body-primary-fs);
+  font-weight: var(--suisse-body-primary-wt);
+  line-height: var(--suisse-body-primary-lh);
+  color: var(--color-text-muted);
+  max-width: 72ch;
+  margin-bottom: var(--space-16);
+}
+
+/* ── Section ───────────────────────────────────────────────── */
+.legal-page__section {
+  margin-bottom: var(--space-12);
+  padding-bottom: var(--space-12);
+  border-bottom: 1px solid var(--color-divider);
+}
+
+.legal-page__section:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+.legal-page__section-title {
+  font-family: var(--font-gravity-normal);
+  font-size: var(--gravity-heading-quaternary-fs);
+  font-weight: var(--gravity-heading-quaternary-wt);
+  line-height: var(--gravity-heading-quaternary-lh);
+  letter-spacing: var(--gravity-heading-quaternary-ls);
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-6);
+}
+
+/* ── Sub-section ───────────────────────────────────────────── */
+.legal-page__subsection {
+  margin-top: var(--space-8);
+}
+
+.legal-page__subsection-title {
+  font-family: var(--font-suisse);
+  font-size: var(--suisse-body-secondary-fs);
+  font-weight: var(--wt-semibold);
+  line-height: var(--suisse-body-secondary-lh);
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-3);
+}
+
+/* ── Body text ─────────────────────────────────────────────── */
+.legal-page__body {
+  font-family: var(--font-suisse);
+  font-size: var(--suisse-body-secondary-fs);
+  font-weight: var(--suisse-body-secondary-wt);
+  line-height: var(--suisse-body-secondary-lh);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-4);
+  max-width: 72ch;
+}
+
+.legal-page__body:last-child {
+  margin-bottom: 0;
+}
+
+/* ── List ──────────────────────────────────────────────────── */
+.legal-page__list {
+  list-style: none;
+  padding: 0;
+  margin: var(--space-4) 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.legal-page__list li {
+  font-family: var(--font-suisse);
+  font-size: var(--suisse-body-secondary-fs);
+  font-weight: var(--suisse-body-secondary-wt);
+  line-height: var(--suisse-body-secondary-lh);
+  color: var(--color-text-muted);
+  padding-left: var(--space-5);
+  position: relative;
+}
+
+.legal-page__list li::before {
+  content: '—';
+  position: absolute;
+  left: 0;
+  color: var(--color-text-muted);
+}
+
+/* ── Contact block ─────────────────────────────────────────── */
+.legal-page__contact-block {
+  margin-top: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.legal-page__contact-block p {
+  font-family: var(--font-suisse);
+  font-size: var(--suisse-body-secondary-fs);
+  font-weight: var(--suisse-body-secondary-wt);
+  line-height: var(--suisse-body-secondary-lh);
+  color: var(--color-text-muted);
+}
+
+.legal-page__contact-block a {
+  color: var(--color-text-primary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.legal-page__contact-block a:hover {
+  color: var(--color-text-muted);
+}
+
+/* ── Responsive ────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .legal-page__hero {
+    padding-top: var(--space-20);
+    padding-bottom: var(--space-8);
+  }
+
+  .legal-page__content {
+    padding-inline: var(--container-padding-sm);
+    padding-top: var(--space-10);
+    padding-bottom: var(--space-16);
+  }
+
+  .legal-page__section {
+    margin-bottom: var(--space-8);
+    padding-bottom: var(--space-8);
+  }
+}
