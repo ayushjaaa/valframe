@@ -1,9 +1,6 @@
 import './WorkSection.css'
-import img1 from '../../../assets/images/1.png'
-import img2 from '../../../assets/images/2.jpeg'
-import img3 from '../../../assets/images/3.png'
-import img4 from '../../../assets/images/4.jpeg'
-import img5 from '../../../assets/images/5.jpeg'
+import imgA from '../../../assets/images/works/2.png'
+import imgB from '../../../assets/images/works/porfolioimage1.webp'
 
 function WorkSection() {
   return (
@@ -25,23 +22,23 @@ function WorkSection() {
           <div className="work__grid">
 
             <div className="work__card work__card--featured">
-              <img src={img2} alt="Fashion app project" />
+              <img src={imgA} alt="Fashion app project" />
             </div>
 
             <div className="work__card">
-              <img src={img5} alt="Brews Coffee website" />
+              <img src={imgB} alt="Brews Coffee website" />
             </div>
 
             <div className="work__card">
-              <img src={img4} alt="Real estate app" />
+              <img src={imgA} alt="Real estate app" />
             </div>
 
             <div className="work__card">
-              <img src={img1} alt="Mobile app mockup" />
+              <img src={imgB} alt="Mobile app mockup" />
             </div>
 
             <div className="work__card work__card--wide">
-              <img src={img3} alt="Multi-device project mockup" />
+              <img src={imgA} alt="Multi-device project mockup" />
             </div>
 
           </div>

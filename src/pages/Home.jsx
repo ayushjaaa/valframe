@@ -7,10 +7,13 @@ import WorksSection from '../components/features/works'
 import TestimonialsSection from '../components/features/testimonials'
 import FaqSection from '../components/features/faq'
 import FooterSection from '../components/features/footer'
-import img2 from '../assets/images/2.jpeg'
-import img3 from '../assets/images/3.png'
-import img4 from '../assets/images/4.jpeg'
-import img5 from '../assets/images/5.jpeg'
+import img2 from '../assets/images/works/2.png'
+import img5 from '../assets/images/works/porfolioimage1.webp'
+import colorapp1 from '../assets/images/works/colorapp1Valframe.webp'
+import colorapp from '../assets/images/works/colorappValframe.webp'
+import macbook13 from '../assets/images/works/MacBook  13.webp'
+import pharmacare from '../assets/images/works/pharamycareappValframe.webp'
+import fashone from '../assets/images/works/fashoneProjectSowcasevalframe.webp'
 import taAnkit    from '../assets/images/tasti/WhatsApp Image 2026-03-02 at 01.06.18.jpeg'
 import taPawan    from '../assets/images/tasti/WhatsApp Image 2026-03-02 at 01.06.18 (1).jpeg'
 import taRahul    from '../assets/images/tasti/WhatsApp Image 2026-03-02 at 01.06.18 (2).jpeg'
@@ -130,49 +133,78 @@ const FAQS = [
 
 const WORKS_ITEMS = [
   {
-    client: 'Vesenex',
+    slug: 'elanora',
+    client: 'Elanora',
     country: 'Australia',
     category: 'Branding & 3D Website',
     src: img5,
-    alt: 'Vesenex — Brews Coffee website design',
+    alt: 'Elanora — Branding & 3D Website',
     wide: true,
     parallaxSpeed: 0.22,
   },
   {
-    client: 'Summr',
-    country: 'India',
-    category: 'Branding & 3D Website',
+    slug: 'summr',
+    client: 'N3',
+    country: '',
+    category: 'Shopify & E-commerce',
     src: img2,
     alt: 'Summr — product bottle held against sky',
     wide: false,
     parallaxSpeed: 0.3,
+    externalUrl: 'https://nextbeast.in/products/oversized-cotton-t-shirts-relaxed-fit-tees-for-men-6',
+    objectFit: 'contain',
   },
   {
+    slug: 'bcf-cast-factory',
     client: 'BCF Cast Factory',
     country: '',
     category: 'UIUX & Web',
-    src: img4,
-    alt: 'BCF Cast Factory — industrial motor component',
+    src: colorapp1,
+    alt: 'BCF Cast Factory — UIUX & Web',
     wide: false,
     parallaxSpeed: 0.18,
   },
   {
+    slug: 'hashmint',
     client: 'Hashmint',
     country: 'India',
     category: '3D Website & Photography',
-    src: img3,
+    src: macbook13,
     alt: 'Hashmint — tablet on a brown desk',
     wide: true,
     parallaxSpeed: 0.25,
+    objectFit: 'cover',
   },
   {
+    slug: 'pharmacare',
+    client: 'Pharmacare',
+    country: 'India',
+    category: 'App Design',
+    src: pharmacare,
+    alt: 'Pharmacare — App Design',
+    wide: false,
+    parallaxSpeed: 0.2,
+  },
+  {
+    slug: 'brews-coffee',
     client: 'Brews Coffee',
     country: 'India',
     category: 'Web Design & Development',
-    src: img5,
+    src: colorapp,
     alt: 'Brews Coffee — website design',
     wide: false,
     parallaxSpeed: 0.2,
+  },
+  {
+    slug: 'fashone',
+    client: 'Fashone',
+    country: 'India',
+    category: 'Fashion & E-commerce',
+    src: fashone,
+    alt: 'Fashone — Fashion & E-commerce',
+    wide: true,
+    parallaxSpeed: 0.22,
+    aspectRatio: '16 / 9',
   },
 ]
 

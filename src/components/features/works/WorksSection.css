@@ -85,13 +85,10 @@
 .works-card {
   position: relative;
   border-radius: var(--radius-2xl);
-  /* NO overflow:hidden here — border-radius + overflow:hidden forces the
-     browser to clip-repaint every frame the child image moves.
-     Clipping is handled by clip-path on the media-wrap instead. */
+  overflow: hidden;
   background-color: var(--color-neutral-900);
   aspect-ratio: 1 / 1;
   cursor: pointer;
-  /* Isolate stacking context so child GPU layers don't bleed */
   isolation: isolate;
 }
 
@@ -122,13 +119,13 @@
   object-fit: cover;
   object-position: center;
   display: block;
-  /* NO will-change here — parent media-wrap already has it.
-     NO transition — JS drives transform every rAF frame. */
+  /* NO transition — JS drives translateY every rAF frame.
+     NO will-change — parent media-wrap already promotes the layer. */
 }
 
-/* Hover: scale the media-wrap (not the img) so JS translateY is undisturbed */
+/* Hover: scale the media-wrap — clip-path moves with it, image stays contained */
 .works-card:hover .works-card__media-wrap {
-  transform: scale(1.03);
+  transform: scale(1.04);
 }
 
 /* ── Overlay gradient ──────────────────────────────────────── */

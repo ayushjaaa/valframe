@@ -154,7 +154,7 @@ function drawMonitor(canvas, ctx, dpr, prog, video) {
 
     // Perspective-correct mapping via affine triangle subdivision.
     // STEPS=6 → 72 triangles per frame, fast enough for smooth 60fps RAF.
-    const STEPS = 6
+    const STEPS = 4
 
     // Pre-compute all grid points once outside the triangle loop
     const pts = []
@@ -445,6 +445,15 @@ function MonitorCanvas({ canvasElRef, onScrollProgress }) {
 
     // Visibility flag — RAF loop pauses when canvas is off-screen
     let isVisible = true
+    let isScrolling = false
+    let scrollIdleTimer = null
+
+    function onScrollStart() {
+      isScrolling = true
+      clearTimeout(scrollIdleTimer)
+      scrollIdleTimer = setTimeout(() => { isScrolling = false }, 150)
+    }
+    window.addEventListener('scroll', onScrollStart, { passive: true })
 
     // RAF loop — runs only while video is playing AND canvas is in viewport.
     function loop() {
@@ -453,9 +462,8 @@ function MonitorCanvas({ canvasElRef, onScrollProgress }) {
         return
       }
       const prog = progRef.current
-      // When video is playing, redraw every frame (video content changes each frame).
-      // When video is not ready, skip if prog hasn't changed — saves CPU on static frames.
-      const videoPlaying = video.readyState >= 2 && !video.paused
+      // Pause video redraws while user is actively scrolling — only update prog changes
+      const videoPlaying = video.readyState >= 2 && !video.paused && !isScrolling
       if (videoPlaying || prog !== lastProgRef.current) {
         drawMonitor(canvas, ctx, dprRef.current, prog, video)
         lastProgRef.current = prog
@@ -496,6 +504,8 @@ function MonitorCanvas({ canvasElRef, onScrollProgress }) {
     window.addEventListener('resize', resize)
     return () => {
       window.removeEventListener('resize', resize)
+      window.removeEventListener('scroll', onScrollStart)
+      clearTimeout(scrollIdleTimer)
       observer.disconnect()
       stopLoop()
       if (pendingDrawRef.current) cancelAnimationFrame(pendingDrawRef.current)

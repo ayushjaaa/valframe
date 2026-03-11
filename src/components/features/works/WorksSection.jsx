@@ -1,12 +1,29 @@
+import { useNavigate } from 'react-router-dom'
 import useParallax from '../../../hooks/useParallax'
 import './WorksSection.css'
 
 /* ── Individual work card ─────────────────────────────────── */
-function WorkCard({ client, country, category, src, alt, wide, parallaxSpeed = 0.25 }) {
-  const imgRef = useParallax(parallaxSpeed)
+function WorkCard({ slug, externalUrl, client, country, category, src, alt, wide, parallaxSpeed = 0.25, objectFit = 'cover', objectPosition = 'center', aspectRatio }) {
+  const imgRef  = useParallax(parallaxSpeed)
+  const navigate = useNavigate()
+
+  function handleClick() {
+    if (externalUrl) {
+      window.open(externalUrl, '_blank', 'noopener,noreferrer')
+    } else if (slug) {
+      navigate(`/work/${slug}`)
+    }
+  }
 
   return (
-    <article className={`works-card${wide ? ' works-card--wide' : ''}`}>
+    <article
+      className={`works-card${wide ? ' works-card--wide' : ''}`}
+      style={aspectRatio ? { aspectRatio } : undefined}
+      onClick={handleClick}
+      role={slug ? 'button' : undefined}
+      tabIndex={slug ? 0 : undefined}
+      onKeyDown={slug ? (e) => { if (e.key === 'Enter' || e.key === ' ') handleClick() } : undefined}
+    >
       {/* Parallax image layer */}
       <div className="works-card__media-wrap">
         <img
@@ -15,6 +32,7 @@ function WorkCard({ client, country, category, src, alt, wide, parallaxSpeed = 0
           src={src}
           alt={alt}
           loading="lazy"
+          style={{ objectFit, objectPosition }}
         />
       </div>
 
