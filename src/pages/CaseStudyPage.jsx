@@ -3,13 +3,16 @@ import Navbar from '../components/features/navbar'
 import FooterSection from '../components/features/footer'
 import './CaseStudyPage.css'
 
-
-import img2 from '../assets/images/works/2.png'
-import img5 from '../assets/images/works/porfolioimage1.webp'
-import colorapp1 from '../assets/images/works/colorapp1Valframe.webp'
-import colorapp from '../assets/images/works/colorappValframe.webp'
-import macbook13 from '../assets/images/works/MacBook  13.webp'
-import pharmacare from '../assets/images/works/pharamycareappValframe.webp'
+/* ── Image URLs — resolved at build time via import.meta.url
+   Only the slug that matches is fetched by the browser.
+──────────────────────────────────────────────────────────────── */
+const img2      = new URL('../assets/images/works/2.png',                               import.meta.url).href
+const img5      = new URL('../assets/images/works/porfolioimage1.webp',                 import.meta.url).href
+const colorapp1 = new URL('../assets/images/works/colorapp1Valframe.webp',              import.meta.url).href
+const colorapp  = new URL('../assets/images/works/colorappValframe.webp',               import.meta.url).href
+const macbook13 = new URL('../assets/images/works/MacBook  13.webp',                   import.meta.url).href
+const pharmacare= new URL('../assets/images/works/pharamycareappValframe.webp',         import.meta.url).href
+const fashone   = new URL('../assets/images/works/fashoneProjectSowcasevalframe.webp',  import.meta.url).href
 
 /* ── Case study data ──────────────────────────────────────────
    Add more projects here as you complete them.
@@ -94,6 +97,19 @@ const CASE_STUDIES = {
       { label: 'Homepage', src: colorapp, alt: 'Brews Coffee — Homepage' },
     ],
   },
+  fashone: {
+    client: 'Fashone',
+    country: 'India',
+    category: 'Fashion & E-commerce',
+    year: '2025',
+    tagline: 'A fashion-forward e-commerce experience built for modern consumers.',
+    overview: 'Fashone needed a bold, editorial digital presence that matched the energy of their fashion brand. We designed a full e-commerce experience that puts the product front and centre with a clean, conversion-focused layout.',
+    services: ['E-commerce Design', 'UI/UX Design', 'Development'],
+    coverSrc: fashone,
+    screenshots: [
+      { label: 'Homepage', src: fashone, alt: 'Fashone — Homepage' },
+    ],
+  },
 }
 
 const NAV_LINKS = [
@@ -148,6 +164,7 @@ function CaseStudyPage() {
               className="case-study__cover-img"
               src={study.coverSrc}
               alt={`${study.client} — cover`}
+              fetchpriority="high"
             />
           </div>
         </section>
@@ -183,7 +200,8 @@ function CaseStudyPage() {
                     className="case-study__screen-img"
                     src={screen.src}
                     alt={screen.alt}
-                    loading="lazy"
+                    loading="eager"
+                    fetchpriority="high"
                   />
                 </div>
               </div>

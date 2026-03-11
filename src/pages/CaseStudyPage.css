@@ -208,11 +208,13 @@
   border: 1px solid var(--color-border);
   background-color: var(--color-neutral-200, #E0E0E0);
   box-shadow: var(--shadow-2, 0 4px 24px rgba(0,0,0,0.08));
+  aspect-ratio: 16 / 9;
 }
 
 .case-study__screen-img {
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: cover;
   display: block;
 }
 
