@@ -242,6 +242,12 @@
   background-color: #ffffff;
 }
 
+.site-footer__social-link--disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
 /* ── Contact address ─────────────────────────────────────────── */
 .site-footer__contact {
   display: flex;

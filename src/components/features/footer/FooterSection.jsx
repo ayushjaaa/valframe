@@ -125,21 +125,21 @@ function FooterSection() {
 
             {/* Social row */}
             <div className="site-footer__social" aria-label="Social media links">
-              <a href="https://linkedin.com"  className="site-footer__social-link" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+              <a href="https://www.linkedin.com/company/valfarme-web-solution/" className="site-footer__social-link" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
                 <IconLinkedIn />
               </a>
-              <a href="https://x.com"         className="site-footer__social-link" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
+              <span className="site-footer__social-link site-footer__social-link--disabled" aria-label="X (Twitter)" aria-hidden="true">
                 <IconX />
-              </a>
-              <a href="https://instagram.com" className="site-footer__social-link" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+              </span>
+              <span className="site-footer__social-link site-footer__social-link--disabled" aria-label="Instagram" aria-hidden="true">
                 <IconInstagram />
-              </a>
-              <a href="https://dribbble.com"  className="site-footer__social-link" target="_blank" rel="noopener noreferrer" aria-label="Dribbble">
+              </span>
+              <span className="site-footer__social-link site-footer__social-link--disabled" aria-label="Dribbble" aria-hidden="true">
                 <IconDribbble />
-              </a>
-              <a href="https://behance.net"   className="site-footer__social-link" target="_blank" rel="noopener noreferrer" aria-label="Behance">
+              </span>
+              <span className="site-footer__social-link site-footer__social-link--disabled" aria-label="Behance" aria-hidden="true">
                 <IconBehance />
-              </a>
+              </span>
             </div>
 
             {/* Contact */}

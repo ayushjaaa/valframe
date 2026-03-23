@@ -36,7 +36,7 @@ function AboutSection() {
                   </a>
                   <a
                     className="about__contact-chip"
-                    href="https://www.linkedin.com/in/aayush-jaiswaal"
+                    href="https://www.linkedin.com/company/valfarme-web-solution/"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
